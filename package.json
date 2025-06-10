@@ -15,6 +15,7 @@
     "gcoord": "^0.3.2",
     "geojson": "^0.5.0",
     "mapbox-gl": "^2.15.0",
+    "mapbox-gl": "^2.15.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -41,8 +42,9 @@
     "dev": "vite dev",
     "serve": "vite serve",
     "lint": "eslint --ext .ts,.tsx src --fix",
-    "check": "prettier --write src/main.tsx src/**/*.{css,json,ts,tsx} *.{md,yaml,json,ts,js}",
-    "ci": "pnpm run check && pnpm run lint && pnpm run build"
+    "check": "prettier --check src/main.tsx src/**/*.{css,json,ts,tsx} *.{md,yaml,json,ts,js}",
+    "format": "prettier --write src/main.tsx src/**/*.{css,json,ts,tsx} *.{md,yaml,json,ts,js}",
+    "ci": "pnpm run format && pnpm run lint && pnpm run build"
   },
   "engineStrict": true,
   "browserslist": "defaults, not ie 11",
