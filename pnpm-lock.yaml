@@ -11,6 +11,9 @@ dependencies:
   '@mapbox/polyline':
     specifier: ^1.2.1
     version: 1.2.1
+  '@math.gl/web-mercator':
+    specifier: ^4.1.0
+    version: 4.1.0
   '@surbowl/world-geo-json-zh':
     specifier: ^2.1.5
     version: 2.1.5
@@ -701,11 +704,27 @@ packages:
       sort-object: 3.0.3
     dev: false
 
+  /@math.gl/core@4.1.0:
+    resolution: {integrity: sha512-FrdHBCVG3QdrworwrUSzXIaK+/9OCRLscxI2OUy6sLOHyHgBMyfnEGs99/m3KNvs+95BsnQLWklVfpKfQzfwKA==}
+    dependencies:
+      '@math.gl/types': 4.1.0
+    dev: false
+
+  /@math.gl/types@4.1.0:
+    resolution: {integrity: sha512-clYZdHcmRvMzVK5fjeDkQlHUzXQSNdZ7s4xOqC3nJPgz4C/TZkUecTo9YS4PruZqtDda/ag4erndP0MIn40dGA==}
+    dev: false
+
   /@math.gl/web-mercator@3.6.3:
     resolution: {integrity: sha512-UVrkSOs02YLehKaehrxhAejYMurehIHPfFQvPFZmdJHglHOU4V2cCUApTVEwOksvCp161ypEqVp+9H6mGhTTcw==}
     dependencies:
       '@babel/runtime': 7.27.6
       gl-matrix: 3.4.3
+    dev: false
+
+  /@math.gl/web-mercator@4.1.0:
+    resolution: {integrity: sha512-HZo3vO5GCMkXJThxRJ5/QYUYRr3XumfT8CzNNCwoJfinxy5NtKUd7dusNTXn7yJ40UoB8FMIwkVwNlqaiRZZAw==}
+    dependencies:
+      '@math.gl/core': 4.1.0
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:
