@@ -701,8 +701,8 @@ packages:
       sort-object: 3.0.3
     dev: false
 
-  /@math.gl/web-mercator@3.6.3:
-    resolution: {integrity: sha512-UVrkSOs02YLehKaehrxhAejYMurehIHPfFQvPFZmdJHglHOU4V2cCUApTVEwOksvCp161ypEqVp+9H6mGhTTcw==}
+  /@math.gl/core@4.1.0:
+    resolution: {integrity: sha512-FrdHBCVG3QdrworwrUSzXIaK+/9OCRLscxI2OUy6sLOHyHgBMyfnEGs99/m3KNvs+95BsnQLWklVfpKfQzfwKA==}
     dependencies:
       '@babel/runtime': 7.27.6
       gl-matrix: 3.4.3
