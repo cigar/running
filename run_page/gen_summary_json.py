@@ -151,6 +151,22 @@ def main():
         "half_marathon_pb": half_marathon_pb
     }
 
+    # Override for precise chip time requested by user since GPX durations naturally drift by 1-2 seconds
+    PRECISE_METADATA_OVERRIDES = {
+        1733007657000: {"moving_time": "2:58:32", "seconds": 10712.0},
+        1745103638000: {"moving_time": "1:26:58", "seconds": 5218.0}
+    }
+    
+    if summary["full_marathon_pb"] and summary["full_marathon_pb"]["run_id"] in PRECISE_METADATA_OVERRIDES:
+        override = PRECISE_METADATA_OVERRIDES[summary["full_marathon_pb"]["run_id"]]
+        summary["full_marathon_pb"]["moving_time"] = override["moving_time"]
+        summary["full_marathon_pb"]["seconds"] = override["seconds"]
+        
+    if summary["half_marathon_pb"] and summary["half_marathon_pb"]["run_id"] in PRECISE_METADATA_OVERRIDES:
+        override = PRECISE_METADATA_OVERRIDES[summary["half_marathon_pb"]["run_id"]]
+        summary["half_marathon_pb"]["moving_time"] = override["moving_time"]
+        summary["half_marathon_pb"]["seconds"] = override["seconds"]
+
     os.makedirs(os.path.dirname(SUMMARY_FILE), exist_ok=True)
     with open(SUMMARY_FILE, 'w', encoding='utf-8') as f:
         json.dump(summary, f, ensure_ascii=False, indent=2)

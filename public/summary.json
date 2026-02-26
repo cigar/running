@@ -53,16 +53,16 @@
     "run_id": 1733007657000,
     "name": "run from gpx",
     "distance": 42713.33055233271,
-    "moving_time": "2:58:33",
-    "seconds": 10713.0,
+    "moving_time": "2:58:32",
+    "seconds": 10712.0,
     "start_date_local": "2024-12-01 07:00:57"
   },
   "half_marathon_pb": {
     "run_id": 1745103638000,
     "name": "浦东新区 跑步",
     "distance": 21263.641088490145,
-    "moving_time": "1:27:00",
-    "seconds": 5220.0,
+    "moving_time": "1:26:58",
+    "seconds": 5218.0,
     "start_date_local": "2025-04-20 07:00:38"
   }
 }
