@@ -87,10 +87,6 @@ def main():
             city_matches = extract_cities(location_country)
             if city_matches:
                 city = city_matches[-1]
-                if city in municipality_cities:
-                    district_matches = extract_districts(location_country)
-                    if district_matches:
-                        city = district_matches[-1]
                 cities.add(city)
                 
         # The GPX data contains dirty historical runs (bike rides saved as runs).
