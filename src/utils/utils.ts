@@ -65,9 +65,8 @@ const titleForShow = (run: Activity): string => {
   if (run.name) {
     name = run.name;
   }
-  return `${name} ${date} ${distance} ${DIST_UNIT} ${
-    !run.summary_polyline ? '(No map data for this run)' : ''
-  }`;
+  return `${name} ${date} ${distance} ${DIST_UNIT} ${!run.summary_polyline ? '(No map data for this run)' : ''
+    }`;
 };
 
 const formatPace = (d: number): string => {
@@ -85,8 +84,13 @@ const convertMovingTime2Sec = (moving_time: string): number => {
   // moving_time : '2 days, 12:34:56' or '12:34:56';
   const splits = moving_time.split(', ');
   const days = splits.length == 2 ? parseInt(splits[0]) : 0;
-  const time = splits.splice(-1)[0];
-  const [hours, minutes, seconds] = time.split(':').map(Number);
+  const timeStr = splits.splice(-1)[0];
+
+  // Handle SQLite datetime outputs like '1970-01-01 01:27:00.000'
+  const timeMatch = timeStr.match(/(\d+:\d+:\d+(?:\.\d+)?)/);
+  const timeToParse = timeMatch ? timeMatch[1] : timeStr;
+
+  const [hours, minutes, seconds] = timeToParse.split(':').map(Number);
   const totalSeconds = ((days * 24 + hours) * 60 + minutes) * 60 + seconds;
   return totalSeconds;
 };
