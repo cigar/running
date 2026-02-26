@@ -1,8 +1,7 @@
 import * as mapboxPolyline from '@mapbox/polyline';
 import gcoord from 'gcoord';
 import { WebMercatorViewport } from '@math.gl/web-mercator';
-import { chinaGeojson, RPGeometry } from '@/static/run_countries';
-import worldGeoJson from '@surbowl/world-geo-json-zh/world.zh.json';
+import { RPGeometry } from '@/static/run_countries';
 import { chinaCities } from '@/static/city';
 import {
   MAIN_COLOR,
@@ -15,9 +14,10 @@ import {
   HIKING_COLOR,
   WALKING_COLOR,
   SWIMMING_COLOR,
-  RUN_COLOR,
+  getRuntimeRunColor,
   RUN_TRAIL_COLOR,
   MAP_TILE_STYLES,
+  MAP_TILE_STYLE_DARK,
 } from './const';
 import {
   FeatureCollection,
@@ -25,10 +25,18 @@ import {
   Feature,
   GeoJsonProperties,
 } from 'geojson';
+import { getMapThemeFromCurrentTheme } from '@/hooks/useTheme';
 
 export type Coordinate = [number, number];
 
 export type RunIds = Array<number> | [];
+
+// Check for units environment variable
+const IS_IMPERIAL = import.meta.env.VITE_USE_IMPERIAL === 'true';
+export const M_TO_DIST = IS_IMPERIAL ? 1609.344 : 1000; // Meters to Mi or Km
+export const M_TO_ELEV = IS_IMPERIAL ? 3.28084 : 1; // Meters to Feet or Meters
+export const DIST_UNIT = IS_IMPERIAL ? 'mi' : 'km'; // Label
+export const ELEV_UNIT = IS_IMPERIAL ? 'ft' : 'm'; // Label
 
 export interface Activity {
   run_id: number;
@@ -49,7 +57,7 @@ export interface Activity {
 
 const titleForShow = (run: Activity): string => {
   const date = run.start_date_local.slice(0, 11);
-  const distance = (run.distance / 1000.0).toFixed(2);
+  const distance = (run.distance / M_TO_DIST).toFixed(2);
   let name = 'Run';
   if (run.name.slice(0, 7) === 'Running') {
     name = 'run';
@@ -57,14 +65,14 @@ const titleForShow = (run: Activity): string => {
   if (run.name) {
     name = run.name;
   }
-  return `${name} ${date} ${distance} KM ${
+  return `${name} ${date} ${distance} ${DIST_UNIT} ${
     !run.summary_polyline ? '(No map data for this run)' : ''
   }`;
 };
 
 const formatPace = (d: number): string => {
   if (Number.isNaN(d)) return '0';
-  const pace = (1000.0 / 60.0) * (1.0 / d);
+  const pace = (M_TO_DIST / 60.0) * (1.0 / d);
   const minutes = Math.floor(pace);
   const seconds = Math.floor((pace - minutes) * 60.0);
   return `${minutes}'${seconds.toFixed(0).toString().padStart(2, '0')}"`;
@@ -95,10 +103,9 @@ const formatRunTime = (moving_time: string): string => {
 
 // for scroll to the map
 const scrollToMap = () => {
-  const el = document.querySelector('.fl.w-100.w-70-l');
-  const rect = el?.getBoundingClientRect();
-  if (rect) {
-    window.scroll(rect.left + window.scrollX, rect.top + window.scrollY);
+  const mapContainer = document.getElementById('map-container');
+  if (mapContainer) {
+    mapContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 };
 
@@ -226,28 +233,34 @@ const pathForRun = (run: Activity): Coordinate[] => {
       }
     }
     return c;
-  } catch (err) {
+  } catch (_err) {
     return [];
   }
 };
 
 const colorForRun = (run: Activity): string => {
+  const dynamicRunColor = getRuntimeRunColor();
+
   switch (run.type) {
     case 'Run': {
       if (run.subtype === 'trail') {
         return RUN_TRAIL_COLOR;
       } else if (run.subtype === 'generic') {
-        return RUN_COLOR;
+        return dynamicRunColor;
       }
-      return RUN_COLOR;
+      return dynamicRunColor;
     }
     case 'cycling':
+    case 'Ride': // For Strava
       return CYCLING_COLOR;
     case 'hiking':
+    case 'Hike': // For Strava
       return HIKING_COLOR;
     case 'walking':
+    case 'Walk': // For Strava
       return WALKING_COLOR;
     case 'swimming':
+    case 'Swim': // For Strava
       return SWIMMING_COLOR;
     default:
       return MAIN_COLOR;
@@ -272,13 +285,20 @@ const geoJsonForRuns = (runs: Activity[]): FeatureCollection<LineString> => ({
   }),
 });
 
-const geoJsonForMap = (): FeatureCollection<RPGeometry> => ({
-  type: 'FeatureCollection',
-  features: [...worldGeoJson.features, ...chinaGeojson.features] as Feature<
-    RPGeometry,
-    GeoJsonProperties
-  >[],
-});
+const geoJsonForMap = async (): Promise<FeatureCollection<RPGeometry>> => {
+  const [{ chinaGeojson }, worldGeoJson] = await Promise.all([
+    import('@/static/run_countries'),
+    import('@surbowl/world-geo-json-zh/world.zh.json'),
+  ]);
+
+  return {
+    type: 'FeatureCollection',
+    features: [
+      ...worldGeoJson.default.features,
+      ...chinaGeojson.features,
+    ] as Feature<RPGeometry, GeoJsonProperties>[],
+  };
+};
 
 const getActivitySport = (act: Activity): string => {
   if (act.type === 'Run') {
@@ -435,8 +455,43 @@ const getMapStyle = (vendor: string, styleName: string, token: string) => {
   return style;
 };
 
-const isTouchDevice = () =>
-  'ontouchstart' in window || navigator.maxTouchPoints > 0;
+const isTouchDevice = () => {
+  if (typeof window === 'undefined') return false;
+  return (
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0 ||
+    window.innerWidth <= 768
+  ); // Consider small screens as touch devices
+};
+
+/**
+ * Determines the appropriate map theme based on current settings
+ * @returns The map theme style to use
+ */
+const getMapTheme = (): string => {
+  if (typeof window === 'undefined') return MAP_TILE_STYLE_DARK;
+
+  // Check for explicit theme in DOM
+  const dataTheme = document.documentElement.getAttribute('data-theme') as
+    | 'light'
+    | 'dark'
+    | null;
+
+  // Check for saved theme in localStorage
+  const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+
+  // Determine theme based on priority:
+  // 1. DOM attribute
+  // 2. localStorage
+  // 3. Default to dark theme
+  if (dataTheme) {
+    return getMapThemeFromCurrentTheme(dataTheme);
+  } else if (savedTheme) {
+    return getMapThemeFromCurrentTheme(savedTheme);
+  } else {
+    return getMapThemeFromCurrentTheme('dark');
+  }
+};
 
 export {
   titleForShow,
@@ -459,4 +514,5 @@ export {
   convertMovingTime2Sec,
   getMapStyle,
   isTouchDevice,
+  getMapTheme,
 };

@@ -1,0 +1,61 @@
+
+> yihong.run@1.0.0 build /Users/cigar/Sites/running
+> vite build
+
+vite v7.3.1 building client environment for production...
+transforming...
+[BABEL] Note: The code generator has deoptimised the styling of /Users/cigar/Sites/running/assets/grid.svg as it exceeds the max of 500KB.
+✓ 887 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                1.05 kB │ gzip:     0.50 kB
+dist/.vite/manifest.json                      11.32 kB │ gzip:     1.22 kB
+dist/assets/index-DijEJ4RL.css                61.62 kB │ gzip:    10.97 kB
+dist/assets/year_2026-CNnDxYHy.js              7.02 kB │ gzip:     1.66 kB
+dist/assets/year_2014-r5-yD_mD.js              8.26 kB │ gzip:     1.89 kB
+dist/assets/year_2012-BUvptKtz.js              9.61 kB │ gzip:     2.35 kB
+dist/assets/year_2015-CweaDJUk.js             16.59 kB │ gzip:     4.25 kB
+dist/assets/year_2013-DKXOZEEN.js             17.88 kB │ gzip:     4.53 kB
+dist/assets/year_2016-3syjciOG.js             22.24 kB │ gzip:     5.63 kB
+dist/assets/year_2021-CWfgMkSQ.js             25.35 kB │ gzip:     6.74 kB
+dist/assets/year_2025-Dtm71Lp6.js             25.76 kB │ gzip:     6.70 kB
+dist/assets/year_2024-BynqD63a.js             29.31 kB │ gzip:     7.69 kB
+dist/assets/year_2017-jFpSwRUR.js             31.33 kB │ gzip:     7.91 kB
+dist/assets/year_2018-DVyYxskZ.js             31.86 kB │ gzip:     8.23 kB
+dist/assets/year_2023-CCOPQFrN.js             32.12 kB │ gzip:     8.33 kB
+dist/assets/year_2022-C_3whFN0.js             32.24 kB │ gzip:     8.33 kB
+dist/assets/year_2019-Bw4FvTC-.js             32.90 kB │ gzip:     8.23 kB
+dist/assets/year_2020-CkIfjsAp.js             33.11 kB │ gzip:     8.33 kB
+dist/assets/year_summary_2026-BqZZzsXP.js     42.73 kB │ gzip:     3.31 kB
+dist/assets/year_summary_2012-BGEEQVsZ.js     43.48 kB │ gzip:     3.52 kB
+dist/assets/year_summary_2015-DH5OOo8t.js     43.89 kB │ gzip:     3.91 kB
+dist/assets/year_summary_2018-BMS6rPLZ.js     44.14 kB │ gzip:     3.75 kB
+dist/assets/year_summary_2014-BBPj9jnY.js     44.37 kB │ gzip:     4.06 kB
+dist/assets/year_summary_2013-CTby6-pv.js     44.44 kB │ gzip:     4.04 kB
+dist/assets/year_summary_2016-ygTYICmo.js     44.76 kB │ gzip:     4.08 kB
+dist/assets/year_summary_2017-LYTDz_iW.js     44.87 kB │ gzip:     4.13 kB
+dist/assets/year_summary_2023-NA8PlxIc.js     45.00 kB │ gzip:     4.35 kB
+dist/assets/year_summary_2022-CYKMojRX.js     45.07 kB │ gzip:     4.38 kB
+dist/assets/year_summary_2020-nhJtzMK0.js     45.44 kB │ gzip:     4.55 kB
+dist/assets/year_summary_2019-0Vekuwh3.js     45.60 kB │ gzip:     4.13 kB
+dist/assets/year_summary_2021-Covg5Ovx.js     45.66 kB │ gzip:     4.59 kB
+dist/assets/year_summary_2025-CNgzwAvZ.js     46.10 kB │ gzip:     4.40 kB
+dist/assets/year_summary_2024-aOjnySNM.js     46.30 kB │ gzip:     4.68 kB
+dist/assets/github_2024-DLVY3TP0.js           53.19 kB │ gzip:     4.88 kB
+dist/assets/github_2025-0QgbUc3i.js           54.03 kB │ gzip:     4.83 kB
+dist/assets/github_2026-BhIxNTQx.js           56.42 kB │ gzip:     3.73 kB
+dist/assets/github_2021-D3ILuOQW.js           58.46 kB │ gzip:     4.32 kB
+dist/assets/github_2022-DFSBkdte.js           58.55 kB │ gzip:     4.24 kB
+dist/assets/github_2023-KXianjwE.js           58.72 kB │ gzip:     4.19 kB
+dist/assets/index-ChYwcV8K.js                 85.23 kB │ gzip:    27.15 kB
+dist/assets/mol.svg-9byDXgtb.js              172.93 kB │ gzip:     9.67 kB
+dist/assets/github.svg-BwhxBTOB.js           658.65 kB │ gzip:    52.60 kB
+dist/assets/vendors-C4V3m2aM.js            1,698.56 kB │ gzip:   491.56 kB
+dist/assets/grid.svg-vMhKeEAP.js           4,480.98 kB │ gzip:   901.40 kB
+dist/assets/activities-58NnkIN6.js         5,695.39 kB │ gzip: 2,724.58 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 10.68s

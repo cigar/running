@@ -21,6 +21,7 @@
    - For old data: To include `Elevation Gain` for past activities, perform a full reimport.
    - To show the 'Elevation Gain' column, modify `SHOW_ELEVATION_GAIN` in `src/utils/const.ts`
    - note: `Elevation Gain` may be inaccurate. You can use Strava's "Correct Elevation" or Garmin's "Elev Corrections" feature for more precise data.
+6. 本项目现在默认使用 MapCN（免费）。如果你选择使用 Mapbox，请获取你自己的 token。请勿使用项目维护者的 token - 查看此 [issue](https://github.com/yihong0618/running_page/issues/643) 和 [issue #1055](https://github.com/yihong0618/running_page/issues/1055)
 
 ![running_page](https://socialify.git.ci/yihong0618/running_page/image?description=1&font=Inter&forks=1&issues=1&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2Fshaonianche%2Fgallery%2Fmaster%2Frunning_page%2Frunning_page_logo_150*150.jpg&owner=1&pulls=1&stargazers=1&theme=Light)
 
@@ -120,7 +121,13 @@ R.I.P. 希望大家都能健康顺利的跑过终点，逝者安息。
 | [Evan](https://github.com/LinghaoChan)            | <https://github.com/LinghaoChan/running>       | Keep        |
 | [Shuqi](https://github.com/zhufengme)             | <https://runner-shuqi.devlink.cn/>             | Garmin      |
 | [shugoal](https://github.com/shugoal)             | <https://shugoal.github.io/wk-shu/>            | Garmin      |
-
+| [Bolyn](https://run.wbolyn.com)                   | <https://run.wbolyn.com>                       | Coros       |
+| [LeiChen](https://github.com/xthirty77)           | <https://xthirty77.github.io/running_page/>    | Coros       |
+| [itrunner](https://itrunner.cn)                   | <https://itrunner.cn>                          | Garmin      |
+| [maslke](https://github.com/maslke)               | <https://maslke.space/running_page/>           | Garmin-cn   |
+| [Niewei Yang](https://github.com/Niewei-Yang)     | <https://neewii-worksout.vercel.app/>          | Strava      |
+| [RUN.LOG](https://github.com/bzzd2001)            | <https://run.731558.xyz:6881/>                 | Strava      |
+| [StoneRicky](https://github.com/StoneRicky)       | <https://stonericky.github.io/running_page/>   | COROS       |
 </details>
 
 ## 它是怎么工作的
@@ -157,7 +164,6 @@ R.I.P. 希望大家都能健康顺利的跑过终点，逝者安息。
 - **[Garmin-cn](#garmin-cn-大陆用户使用)**
 - **[Keep](#keep)**
 - **[悦跑圈](#joyrun悦跑圈)** ：限制单个设备，无法自动化
-- **[咕咚](#codoon咕咚)** ：限制单个设备，无法自动化
 - **[郁金香运动](#tulipsport)**
 - **[GPX](#gpx)**
 - **[TCX](#tcx)**
@@ -170,6 +176,9 @@ R.I.P. 希望大家都能健康顺利的跑过终点，逝者安息。
 - **[Garmin_to_Strava(Using Garmin Run, Strava backup data)](#garmin_to_strava)**
 - **[Strava_to_Garmin(Using Strava Run, Garmin backup data)](#strava_to_garmin)**
 - **[Coros 高驰](#coros-高驰)**
+- **[iGPSPORT迹驰](#igpsport)**
+- **[Komoot](#komoot)**
+- **[Onelap](#onelap)**
 
 ## 视频教程
 
@@ -229,7 +238,7 @@ docker run -itd -p 80:80   running_page:latest
 
 ```typescript
 const MAPBOX_TOKEN =
-  'pk.eyJ1IjoieWlob25nMDYxOCIsImEiOiJja2J3M28xbG4wYzl0MzJxZm0ya2Fua2p2In0.PNKfkeQwYuyGOTT_x9BJ4Q';
+  'pk.dummy_token_replace_me_for_mapbox';
 ```
 
 ## 更改默认地图服务样式
@@ -237,25 +246,53 @@ const MAPBOX_TOKEN =
 > 在使用默认的地图服务样式之外，你可以通过修改 src/utils/const.ts 文件中的以下配置项来自定义地图显示。
 
 ```typescript
-const MAP_TILE_VENDOR = 'maptiler';
-const MAP_TILE_STYLE = 'winter-dark';
-const MAP_TILE_ACCESS_TOKEN = '你的 access token';
+const MAP_TILE_VENDOR = 'mapcn'; // 默认（免费！）
+const MAP_TILE_STYLE = 'osm-bright';
+const MAP_TILE_ACCESS_TOKEN = ''; // MapCN 不需要 token
 ```
 
 目前，支持的 MAP_TILE_VENDOR 选项包括：
 
-- **"mapbox"** - Mapbox 地图服务
+- **"mapcn"** - MapCN 地图服务（免费，无需 token）⭐ 默认推荐
+- **"mapbox"** - Mapbox 地图服务（需要 token，有费用）
+- **"maptiler"** - MapTiler 地图服务（有免费额度）
+- **"stadiamaps"** - Stadia Maps 地图服务（有免费额度）
 
-- **"maptiler"** - MapTiler 地图服务
+使用 MapCN（默认）
+MapCN 是免费的地图服务提供商，现在是默认选项，无需配置！
 
-- **"stadiamaps"** - Stadia Maps 地图服务
+可用的 MapCN 样式：
+
+- **osm-bright** - 明亮的 OpenStreetMap 样式（默认）
+- **osm-liberty** - 备选明亮样式
+- **dark-matter** - 深色主题样式
+
+**无需访问令牌！** 🎉
+
+## 版权归属
+
+当使用 MapCN (Carto Basemaps) 时，请确保遵守其版权归属要求：
+
+- 地图瓦片: © [CARTO](https://carto.com/)
+- 地图数据: © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors
+
+本项目模板已在地图显示中包含了相应的版权声明。
+
+## 使用其他提供商
+如果你更喜欢 Mapbox、MapTiler 或 Stadia Maps，你可以更改供应商：
+
+```typescript
+const MAP_TILE_VENDOR = 'mapbox'; // 或 'maptiler' 或 'stadiamaps'
+const MAP_TILE_STYLE = 'dark-v10'; // 所选供应商的样式
+const MAP_TILE_ACCESS_TOKEN = 'your_access_token_here';
+```
 
 每个`MAP_TILE_VERNDOR`都提供了多种`MAP_TILE_STYLE`选择，配置时需保证匹配。具体的`MAP_TILE_STYLE`名称，可参考`src/utils/const.ts`文件中的定义。
 
-当使用 **"maptiler"** 或是 **"stadiamaps"** 时，需配置`MAP_TILE_ACCESS_TOKEN`。默认的 token 在不更改的情况下，使用时会发生配额超限的问题。
+当使用 **"mapbox"**、**"maptiler"** 或是 **"stadiamaps"** 时，需配置`MAP_TILE_ACCESS_TOKEN`。默认的 token 在不更改的情况下，使用时会发生配额超限的问题。
 
+- **Mapbox**: 在 https://www.mapbox.com/ 注册（有使用成本）
 - **MapTiler**: 在 https://cloud.maptiler.com/auth/widget 注册获取（免费）
-
 - **Stadia Maps**: 在 https://client.stadiamaps.com/signup/ 注册获取（免费）
 
 ## 个性化设置
@@ -484,73 +521,6 @@ python run_page/joyrun_sync.py 1393xx30xxxx 97e5fe4997d20f9b1007xxxxx --from-uid
 
 ```bash
 python run_page/joyrun_sync.py 13333xxxx xxxx --athlete yihong0618 --min_grid_distance 5
-```
-
-</details>
-
-### Codoon（咕咚）
-
-> 因悦跑圈限制单个设备，无法自动化。
-
-<details>
-<summary>获取您的咕咚数据</summary>
-
-<br>
-
-```bash
-python run_page/codoon_sync.py ${your mobile or email} ${your password}
-```
-
-示例：
-
-```bash
-python run_page/codoon_sync.py 13333xxxx xxxx
-```
-
-Codoon 导出 gpx
-
-> 导出的 gpx 在 GPX_OUT 目录，方便上传到其它软件
-
-```bash
-python run_page/codoon_sync.py ${your mobile or email} ${your password} --with-gpx
-```
-
-示例：
-
-```bash
-python run_page/codoon_sync.py 13333xxxx xxxx --with-gpx
-```
-
-> 因为登录 token 有过期时间限制，我增加了 refresh_token&user_id 登陆的方式，refresh_token 及 user_id 在您登陆过程中会在控制台打印出来
-
-![image](https://user-images.githubusercontent.com/6956444/105690972-9efaab00-5f37-11eb-905c-65a198ad2300.png)
-
-示例：
-
-```bash
-python run_page/codoon_sync.py 54bxxxxxxx fefxxxxx-xxxx-xxxx --from-auth-token
-```
-
-</details>
-
-<details>
-<summary>路线偏移修正</summary>
-
-<br>
-
-如果您得到的运动路线与实际路线对比有整体偏移，可以修改代码中的参数进行修正
-
-> 咕咚最初采用 GCJ-02 坐标系，在 2014 年 3 月份左右升级为 WGS-84 坐标系，导致升级之前的运动数据在使用 WGS-84 坐标系的平台（Mapbox、佳明等）中显示轨迹整体偏移
-
-- 修改 `run_page/codoon_sync.py` 文件中的参数：
-
-> TRANS_END_DATE 需要根据您的实际情况设定，程序会修正这一天之前的运动记录
-
-```python
-# If your points need trans from gcj02 to wgs84 coordinate which use by Mapbox
-TRANS_GCJ02_TO_WGS84 = True
-# trans the coordinate data until the TRANS_END_DATE, work with TRANS_GCJ02_TO_WGS84 = True
-TRANS_END_DATE = "2014-03-24"
 ```
 
 </details>
@@ -1002,10 +972,10 @@ python run_page/nike_to_strava_sync.py eyJhbGciThiMTItNGIw******  xxx xxx xxx
 
 </details>
 
-### Coros 高驰
+### COROS 高驰
 
 <details>
-<summary>获取您的 Coros 高驰 数据</summary>
+<summary>获取您的 COROS 高驰 数据</summary>
 
 <br>
 
@@ -1024,6 +994,21 @@ python run_page/coros_sync.py ${{ secrets.COROS_ACCOUNT }} ${{ secrets.COROS_PAS
 - 在 github action 中配置 `COROS_ACCOUNT`，`COROS_PASSWORD` 参数
 
   ![github-action](https://img3.uploadhouse.com/fileuploads/30980/3098042335f8995623f8b50776c4fad4cf7fff8d.png)
+
+</details>
+
+### iGPSPORT
+
+<details>
+<summary>获取您的 iGPSPORT 迹驰 数据</summary>
+
+#### 在终端中输入以下命令
+
+```bash
+python run_page/igpsport_sync.py ${iGPSPORT_mobile} ${iGPSPORTS_password} --with-gpx
+```
+
+如果你想要 fit 格式的数据而非 gpx,可以将`--with-gpx`替换为`--with-fit`。
 
 </details>
 
@@ -1055,6 +1040,32 @@ python run_page/keep_to_strava_sync.py ${your mobile} ${your password} ${client_
    ```yaml
    RUN_TYPE: keep_to_strava_sync
    ```
+
+</details>
+
+### Komoot
+
+<details>
+<summary>获取您的 Komoot 数据</summary>
+
+#### 在终端中输入以下命令
+
+```bash
+python3 run_page/komoot_sync.py 'your komoot email' 'password' --with-gpx
+```
+
+</details>
+
+### Onelap
+
+<details>
+<summary>获取您的迈金顽鹿数据</summary>
+
+#### 在终端中输入以下命令
+
+```bash
+python3 run_page/onelap_sync.py 'your onelap phone' 'password' --with-fit
+```
 
 </details>
 

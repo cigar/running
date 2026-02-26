@@ -21,7 +21,7 @@ from rich import print
 from tcxreader.tcxreader import TCXReader
 
 from .exceptions import TrackLoadError
-from .utils import parse_datetime_to_local
+from .utils import parse_datetime_to_local, get_normalized_sport_type
 
 start_point = namedtuple("start_point", "lat lon")
 run_map = namedtuple("polyline", "summary_polyline")
@@ -138,6 +138,14 @@ class Track:
         polyline_data = polyline.decode(summary_polyline) if summary_polyline else []
         self.polylines = [[s2.LatLng.from_degrees(p[0], p[1]) for p in polyline_data]]
         self.run_id = activity.run_id
+        self.type = get_normalized_sport_type(activity.type)
+        # Load moving_dict from database
+        self.moving_dict = {
+            "distance": self.length,
+            "moving_time": activity.moving_time,
+            "elapsed_time": activity.elapsed_time,
+            "average_speed": activity.average_speed or 0,
+        }
 
     def bbox(self):
         """Compute the smallest rectangle that contains the entire track (border box)."""
