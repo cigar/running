@@ -43,6 +43,80 @@
   "countries": [
     "中国"
   ],
+  "runs_stats": {
+    "total": {
+      "full_marathon": 29,
+      "half_marathon": 299,
+      "10k": 1791
+    },
+    "years": {
+      "2014": {
+        "full_marathon": 0,
+        "half_marathon": 4,
+        "10k": 23
+      },
+      "2015": {
+        "full_marathon": 4,
+        "half_marathon": 10,
+        "10k": 95
+      },
+      "2016": {
+        "full_marathon": 3,
+        "half_marathon": 26,
+        "10k": 155
+      },
+      "2017": {
+        "full_marathon": 5,
+        "half_marathon": 29,
+        "10k": 239
+      },
+      "2018": {
+        "full_marathon": 1,
+        "half_marathon": 32,
+        "10k": 229
+      },
+      "2019": {
+        "full_marathon": 4,
+        "half_marathon": 30,
+        "10k": 211
+      },
+      "2020": {
+        "full_marathon": 2,
+        "half_marathon": 33,
+        "10k": 181
+      },
+      "2021": {
+        "full_marathon": 0,
+        "half_marathon": 24,
+        "10k": 87
+      },
+      "2022": {
+        "full_marathon": 2,
+        "half_marathon": 28,
+        "10k": 164
+      },
+      "2023": {
+        "full_marathon": 3,
+        "half_marathon": 33,
+        "10k": 176
+      },
+      "2024": {
+        "full_marathon": 3,
+        "half_marathon": 32,
+        "10k": 117
+      },
+      "2025": {
+        "full_marathon": 2,
+        "half_marathon": 18,
+        "10k": 107
+      },
+      "2026": {
+        "full_marathon": 0,
+        "half_marathon": 0,
+        "10k": 7
+      }
+    }
+  },
   "full_marathon_pb": {
     "run_id": 1733007657000,
     "name": "run from gpx",

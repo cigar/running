@@ -80,6 +80,11 @@ def main():
     cities = set()
     countries = set()
     
+    runs_stats = {
+        "total": {"full_marathon": 0, "half_marathon": 0, "10k": 0},
+        "years": {}
+    }
+    
     full_marathon_pb = None
     half_marathon_pb = None
 
@@ -124,6 +129,23 @@ def main():
             
         run_distance_km = distance / 1000.0
         
+        # Initialize year in stats if not present
+        if start_date_local:
+            year_str = str(dt.year)
+            if year_str not in runs_stats["years"]:
+                runs_stats["years"][year_str] = {"full_marathon": 0, "half_marathon": 0, "10k": 0}
+                
+            # Classify distance
+            if run_distance_km >= 42.195:
+                runs_stats["total"]["full_marathon"] += 1
+                runs_stats["years"][year_str]["full_marathon"] += 1
+            elif run_distance_km >= 21.0975:
+                runs_stats["total"]["half_marathon"] += 1
+                runs_stats["years"][year_str]["half_marathon"] += 1
+            elif run_distance_km >= 10.0:
+                runs_stats["total"]["10k"] += 1
+                runs_stats["years"][year_str]["10k"] += 1
+        
         # Filter out obvious bike rides/glitches saved as runs. A 4.5 m/s speed is ~3:42 min/km.
         avg_speed = run.get("average_speed") or 0
         if avg_speed > 4.5:
@@ -135,7 +157,7 @@ def main():
             if seconds <= 0:
                 continue
             
-            # Full Marathon
+            # Full Marathon PBs
             if 42.195 <= run_distance_km < 46:
                 if full_marathon_pb is None or seconds < full_marathon_pb["seconds"]:
                     full_marathon_pb = {
@@ -167,6 +189,7 @@ def main():
         "cities": sorted(list(cities)),
         "total_countries": len(countries),
         "countries": sorted(list(countries)),
+        "runs_stats": runs_stats,
         "full_marathon_pb": full_marathon_pb,
         "half_marathon_pb": half_marathon_pb
     }
