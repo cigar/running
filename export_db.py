@@ -12,7 +12,7 @@ activities = []
 for r in rows:
     activities.append(dict(r))
 
-with open("src/static/activities.json", "w", encoding='utf-8') as f:
+with open("src/static/activities.json", "w", encoding="utf-8") as f:
     json.dump(activities, f, ensure_ascii=False, indent=2)
 
 print(f"Exported {len(activities)} activities.")
