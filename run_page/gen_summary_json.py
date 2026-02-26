@@ -19,6 +19,14 @@ def convert_moving_time_to_seconds(moving_time):
             pass
     
     time_str = splits[-1]
+    
+    # Extract HH:MM:SS or HH:MM:SS.f from the string ignoring date prefixes
+    time_match = re.search(r'(\d+:\d+:\d+(?:\.\d+)?)', time_str)
+    if time_match:
+        time_str = time_match.group(1)
+        if "." in time_str:
+            time_str = time_str.split(".")[0]
+            
     parts = time_str.split(':')
     hours = int(parts[0]) if len(parts) >= 3 else 0
     minutes = int(parts[1]) if len(parts) >= 3 else int(parts[0]) if len(parts) == 2 else 0
