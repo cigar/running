@@ -93,13 +93,32 @@ def main():
                         city = district_matches[-1]
                 cities.add(city)
                 
+        # The GPX data contains dirty historical runs (bike rides saved as runs).
+        # We ignore these IDs to accurately find true PBs.
+        IGNORE_RUN_IDS = [
+            1497110863000, 1521907511000, 1484928039000, 
+            1486741898000, 1505491955000, 1570923543000
+        ]
+        
+        run_id = run.get("run_id")
+        if run_id in IGNORE_RUN_IDS:
+            continue
+            
         run_distance_km = distance / 1000.0
+        
+        # Filter out obvious bike rides/glitches saved as runs. A 4.5 m/s speed is ~3:42 min/km.
+        avg_speed = run.get("average_speed") or 0
+        if avg_speed > 4.5:
+            continue
+            
         moving_time = run.get("moving_time")
         if moving_time:
             seconds = convert_moving_time_to_seconds(moving_time)
+            if seconds <= 0:
+                continue
             
             # Full Marathon
-            if run_distance_km >= 42.195:
+            if 42.195 <= run_distance_km < 46:
                 if full_marathon_pb is None or seconds < full_marathon_pb["seconds"]:
                     full_marathon_pb = {
                         "run_id": run.get("run_id"),
@@ -111,7 +130,7 @@ def main():
                     }
                     
             # Half Marathon
-            if 21.0975 <= run_distance_km < 42.195:
+            if 21.0975 <= run_distance_km < 25:
                 if half_marathon_pb is None or seconds < half_marathon_pb["seconds"]:
                     half_marathon_pb = {
                         "run_id": run.get("run_id"),

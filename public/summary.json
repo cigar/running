@@ -50,19 +50,19 @@
     "黄浦区"
   ],
   "full_marathon_pb": {
-    "run_id": 1510423000000,
+    "run_id": 1733007657000,
     "name": "run from gpx",
-    "distance": 43337.07469952784,
-    "moving_time": "0:26:15",
-    "seconds": 1575.0,
-    "start_date_local": "2017-11-12 09:56:40"
+    "distance": 42713.33055233271,
+    "moving_time": "2:58:33",
+    "seconds": 10713.0,
+    "start_date_local": "2024-12-01 07:00:57"
   },
   "half_marathon_pb": {
-    "run_id": 1648222587000,
-    "name": "run from gpx",
-    "distance": 25074.790729049586,
-    "moving_time": "0:00:03",
-    "seconds": 3.0,
-    "start_date_local": "2022-03-26 07:36:27"
+    "run_id": 1745103638000,
+    "name": "浦东新区 跑步",
+    "distance": 21263.641088490145,
+    "moving_time": "1:27:00",
+    "seconds": 5220.0,
+    "start_date_local": "2025-04-20 07:00:38"
   }
 }
