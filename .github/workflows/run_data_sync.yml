@@ -242,6 +242,11 @@ jobs:
           pip install duckdb==1.1.0
           python run_page/save_to_parqent.py
 
+      - name: Generate summary JSON
+        if: env.SAVE_DATA_IN_GITHUB_CACHE != 'true'
+        run: |
+          python run_page/gen_summary_json.py
+
       - name: Push new runs
         if: env.SAVE_DATA_IN_GITHUB_CACHE != 'true'
         run: |
