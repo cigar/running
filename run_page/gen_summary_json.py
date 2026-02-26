@@ -58,6 +58,15 @@ def extract_districts(location_country):
         locations.append(match.group(1))
     return locations
 
+def extract_countries(location_country):
+    if not location_country:
+        return ""
+    # Usually in format "City, Region, Postcode, Country"
+    parts = [p.strip() for p in location_country.split(',')]
+    if parts:
+        return parts[-1]
+    return ""
+
 def main():
     if not os.path.exists(ACTIVITIES_FILE):
         print(f"Activities file not found at {ACTIVITIES_FILE}")
@@ -69,6 +78,7 @@ def main():
     total_distance_meters = 0
     years = set()
     cities = set()
+    countries = set()
     
     full_marathon_pb = None
     half_marathon_pb = None
@@ -96,6 +106,10 @@ def main():
             if city_matches:
                 city = city_matches[-1]
                 cities.add(city)
+                
+            country_match = extract_countries(location_country)
+            if country_match:
+                countries.add(country_match)
                 
         # The GPX data contains dirty historical runs (bike rides saved as runs).
         # We ignore these IDs to accurately find true PBs.
@@ -151,6 +165,8 @@ def main():
         "years": sorted(list(years)),
         "total_cities": len(cities),
         "cities": sorted(list(cities)),
+        "total_countries": len(countries),
+        "countries": sorted(list(countries)),
         "full_marathon_pb": full_marathon_pb,
         "half_marathon_pb": half_marathon_pb
     }

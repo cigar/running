@@ -39,6 +39,10 @@
     "金华市",
     "长沙市"
   ],
+  "total_countries": 1,
+  "countries": [
+    "中国"
+  ],
   "full_marathon_pb": {
     "run_id": 1733007657000,
     "name": "run from gpx",
