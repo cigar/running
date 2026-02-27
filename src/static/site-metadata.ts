@@ -17,7 +17,7 @@ interface ISiteMetadataResult {
 const data: ISiteMetadataResult = {
   siteTitle: "Cigar's Running Page",
   siteUrl: 'https://running.cigatang.space',
-  logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTtc69JxHNcmN1ETpMUX4dozAgAN6iPjWalQ&usqp=CAU',
+  logo: '/images/favicon.png',
   description: "Cigar's personal site and blog",
   navLinks: [
     {
