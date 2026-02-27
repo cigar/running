@@ -95,8 +95,6 @@ def main():
     full_marathon_pb = None
     half_marathon_pb = None
 
-
-
     for run in activities:
         if run.get("type") != "Run":
             continue
