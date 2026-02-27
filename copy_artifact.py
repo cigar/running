@@ -1,5 +1,4 @@
 import shutil
-import os
 
 shutil.copy(
     "duplicates_report.txt",

@@ -95,14 +95,7 @@ def main():
     full_marathon_pb = None
     half_marathon_pb = None
 
-    municipality_cities = [
-        "北京市",
-        "上海市",
-        "天津市",
-        "重庆市",
-        "香港特别行政区",
-        "澳门特别行政区",
-    ]
+
 
     for run in activities:
         if run.get("type") != "Run":

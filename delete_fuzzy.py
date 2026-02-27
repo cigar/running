@@ -64,10 +64,8 @@ conn.commit()
 conn.close()
 
 if deleted_count > 0:
-    from run_page.utils import make_activities_file
 
     print(
         f"Cleanup complete. Deleted {deleted_count} fuzzy records. Rebuilding activities.json..."
     )
-    import export_db  # reuse earlier script
 print("Done")

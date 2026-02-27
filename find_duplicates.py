@@ -41,7 +41,7 @@ with open("duplicates_report.txt", "w") as f:
         f.write("No duplicates found.\n")
     else:
         for r1, r2 in duplicates:
-            f.write(f"--- DUPLICATE SUSPECTED ---\n")
+            f.write("--- DUPLICATE SUSPECTED ---\n")
             f.write(
                 f"Run 1: {r1['start_date_local']} | {r1['distance']}m | ID: {r1['run_id']} | Type: {r1['subtype']}\n"
             )
