@@ -1,7 +1,9 @@
 import json
-import os
+import sqlite3
 from datetime import datetime
 from itertools import combinations
+
+from run_page.utils import make_activities_file
 
 with open("src/static/activities.json", "r") as f:
     activities = json.load(f)
@@ -64,8 +66,6 @@ for r1, r2 in duplicates:
         f"Keeping {run_to_keep['run_id']} ({r1_score if run_to_keep == r1 else r2_score} pts) | Deleting {run_to_delete['run_id']} ({r2_score if run_to_delete == r2 else r1_score} pts)"
     )
 
-    import sqlite3
-
     try:
         conn = sqlite3.connect("run_page/data.db")
         cursor = conn.cursor()
@@ -74,18 +74,16 @@ for r1, r2 in duplicates:
         )
         if cursor.rowcount > 0:
             deleted_count += 1
-            print(f"  -> Deleted from DB")
+            print("  -> Deleted from DB")
         conn.commit()
         conn.close()
     except Exception as e:
         print(f"Error accessing DB: {e}")
-
-from run_page.utils import make_activities_file
 
 print(f"\nCleanup complete. Deleted {deleted_count} redundant track records.")
 print("Rebuilding activities.json...")
 try:
     make_activities_file("run_page/data.db", "GPX_OUT", "src/static/activities.json")
     print("Done")
-except:
+except Exception:
     pass
