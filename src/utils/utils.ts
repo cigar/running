@@ -65,8 +65,9 @@ const titleForShow = (run: Activity): string => {
   if (run.name) {
     name = run.name;
   }
-  return `${name} ${date} ${distance} ${DIST_UNIT} ${!run.summary_polyline ? '(No map data for this run)' : ''
-    }`;
+  return `${name} ${date} ${distance} ${DIST_UNIT} ${
+    !run.summary_polyline ? '(No map data for this run)' : ''
+  }`;
 };
 
 const formatPace = (d: number): string => {
