@@ -240,7 +240,7 @@ const RunMap = ({
     (ref: MapRef) => {
       if (ref !== null) {
         const map = ref.getMap();
-        if (map && IS_CHINESE) {
+        if (map && IS_CHINESE && MAP_TILE_VENDOR !== 'mapcn') {
           map.addControl(new MapboxLanguage({ defaultLanguage: 'zh-Hans' }));
         }
         // all style resources have been downloaded
