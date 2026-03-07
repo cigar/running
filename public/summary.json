@@ -1,5 +1,5 @@
 {
-  "total_distance_km": 35784.22,
+  "total_distance_km": 35813.01,
   "total_years": 13,
   "years": [
     2014,
@@ -47,7 +47,7 @@
     "total": {
       "full_marathon": 29,
       "half_marathon": 299,
-      "10k": 1792
+      "10k": 1793
     },
     "years": {
       "2014": {
@@ -113,7 +113,7 @@
       "2026": {
         "full_marathon": 0,
         "half_marathon": 0,
-        "10k": 8
+        "10k": 9
       }
     }
   },
