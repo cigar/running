@@ -9,27 +9,6 @@
     "@mapbox/polyline": "^1.2.1",
     "@math.gl/web-mercator": "^4.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
-<<<<<<< HEAD
-    "@vercel/analytics": "^0.1.11",
-    "@vercel/speed-insights": "^1.2.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "gcoord": "^0.3.2",
-    "geojson": "^0.5.0",
-    "mapbox-gl": "^2.15.0",
-    "prop-types": "^15.8.1",
-    "rc-virtual-list": "^3.19.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-ga4": "^2.1.0",
-    "react-helmet-async": "^2.0.5",
-    "react-map-gl": "^7.1.9",
-    "react-router-dom": "^6.30.1",
-    "recharts": "^2.15.4",
-    "viewport-mercator-project": "^7.0.4",
-    "vite": "^7.1.2",
-    "vite-plugin-svgr": "^4.3.0",
-    "vite-tsconfig-paths": "^5.1.4"
-=======
     "@vercel/analytics": "^2.0.1",
     "@vitejs/plugin-react": "^6.0.1",
     "gcoord": "^1.0.7",
@@ -44,7 +23,6 @@
     "recharts": "^3.8.1",
     "vite": "^8.0.10",
     "vite-plugin-svgr": "^5.2.0"
->>>>>>> upstream/master
   },
   "license": "MIT",
   "private": true,

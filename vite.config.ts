@@ -1,4 +1,5 @@
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
@@ -80,7 +81,10 @@ export default defineConfig({
     'import.meta.env.VERCEL': JSON.stringify(process.env.VERCEL),
   },
   resolve: {
-    tsconfigPaths: true,
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@assets': fileURLToPath(new URL('./assets', import.meta.url)),
+    },
   },
   build: {
     manifest: true,
