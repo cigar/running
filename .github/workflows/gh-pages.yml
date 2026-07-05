@@ -102,10 +102,10 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           # Upload dist repository
-          name: pages-artifact
+          name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
           path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
         with:
-          artifact_name: pages-artifact
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
