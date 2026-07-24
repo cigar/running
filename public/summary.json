@@ -1,6 +1,6 @@
 {
   "total_distance_km": 36128.88,
-  "last_12_months_km": 1393.81,
+  "last_12_months_km": 1400.12,
   "last_15_days": {
     "total_km": 34.9,
     "morning_km": 12.67,
@@ -148,70 +148,70 @@
       "10k": 1795
     },
     "years": {
-      "2026": {
+      "2014": {
         "full_marathon": 0,
-        "half_marathon": 0,
-        "10k": 11
-      },
-      "2025": {
-        "full_marathon": 2,
-        "half_marathon": 18,
-        "10k": 107
-      },
-      "2024": {
-        "full_marathon": 3,
-        "half_marathon": 32,
-        "10k": 117
-      },
-      "2023": {
-        "full_marathon": 3,
-        "half_marathon": 33,
-        "10k": 176
-      },
-      "2022": {
-        "full_marathon": 2,
-        "half_marathon": 28,
-        "10k": 164
-      },
-      "2021": {
-        "full_marathon": 0,
-        "half_marathon": 24,
-        "10k": 87
-      },
-      "2020": {
-        "full_marathon": 2,
-        "half_marathon": 33,
-        "10k": 181
-      },
-      "2019": {
-        "full_marathon": 4,
-        "half_marathon": 30,
-        "10k": 211
-      },
-      "2018": {
-        "full_marathon": 1,
-        "half_marathon": 32,
-        "10k": 229
-      },
-      "2017": {
-        "full_marathon": 5,
-        "half_marathon": 29,
-        "10k": 239
-      },
-      "2016": {
-        "full_marathon": 3,
-        "half_marathon": 26,
-        "10k": 155
+        "half_marathon": 4,
+        "10k": 23
       },
       "2015": {
         "full_marathon": 4,
         "half_marathon": 10,
         "10k": 95
       },
-      "2014": {
+      "2016": {
+        "full_marathon": 3,
+        "half_marathon": 26,
+        "10k": 155
+      },
+      "2017": {
+        "full_marathon": 5,
+        "half_marathon": 29,
+        "10k": 239
+      },
+      "2018": {
+        "full_marathon": 1,
+        "half_marathon": 32,
+        "10k": 229
+      },
+      "2019": {
+        "full_marathon": 4,
+        "half_marathon": 30,
+        "10k": 211
+      },
+      "2020": {
+        "full_marathon": 2,
+        "half_marathon": 33,
+        "10k": 181
+      },
+      "2021": {
         "full_marathon": 0,
-        "half_marathon": 4,
-        "10k": 23
+        "half_marathon": 24,
+        "10k": 87
+      },
+      "2022": {
+        "full_marathon": 2,
+        "half_marathon": 28,
+        "10k": 164
+      },
+      "2023": {
+        "full_marathon": 3,
+        "half_marathon": 33,
+        "10k": 176
+      },
+      "2024": {
+        "full_marathon": 3,
+        "half_marathon": 32,
+        "10k": 117
+      },
+      "2025": {
+        "full_marathon": 2,
+        "half_marathon": 18,
+        "10k": 107
+      },
+      "2026": {
+        "full_marathon": 0,
+        "half_marathon": 0,
+        "10k": 11
       }
     }
   },
