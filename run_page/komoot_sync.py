@@ -2,14 +2,15 @@
 # https://github.com/timschneeb/KomootGPX.git
 # great thanks
 
+import argparse
+import base64
 import os
 import re
 import sys
-import argparse
-import base64
-import requests
 from datetime import datetime, timedelta
+
 import gpxpy.gpx
+import requests
 from config import GPX_FOLDER
 
 
@@ -229,8 +230,8 @@ class GpxCompiler:
         if self.tour["type"] == "tour_recorded":
             gpx.name = gpx.name + " (Completed)"
         gpx.description = (
-            f"Distance: {str(int(self.tour['distance']) / 1000.0)}km, "
-            f"Estimated duration: {str(round(self.tour['duration'] / 3600.0, 2))}h, "
+            f"Distance: {int(self.tour['distance']) / 1000.0!s}km, "
+            f"Estimated duration: {round(self.tour['duration'] / 3600.0, 2)!s}h, "
             f"Elevation up: {self.tour['elevation_up']}m, "
             f"Elevation down: {self.tour['elevation_down']}m"
         )

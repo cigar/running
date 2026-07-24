@@ -7,7 +7,6 @@
 
 import datetime
 import re
-from typing import Optional
 
 
 class YearRange:
@@ -82,7 +81,7 @@ class YearRange:
             return True
         return self.from_year <= t.year <= self.to_year
 
-    def count(self) -> Optional[int]:
+    def count(self) -> int | None:
         """Return number of years contained in the current range"""
         if self.from_year is None:
             return None

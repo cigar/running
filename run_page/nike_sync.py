@@ -4,7 +4,7 @@ import logging
 import os.path
 import time
 from collections import namedtuple
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from xml.etree import ElementTree
 
 import gpxpy.gpx
@@ -217,9 +217,7 @@ def generate_gpx(title, latitude_data, longitude_data, elevation_data, heart_rat
                 "latitude": lat["value"],
                 "longitude": lon["value"],
                 "start_time": lat["start_epoch_ms"],
-                "time": datetime.fromtimestamp(
-                    lat["start_epoch_ms"] / 1000, tz=timezone.utc
-                ),
+                "time": datetime.fromtimestamp(lat["start_epoch_ms"] / 1000, tz=UTC),
             }
         )
 
@@ -322,11 +320,9 @@ def parse_no_gpx_data(activity):
     elapsed_time = timedelta(seconds=int(activity["active_duration_ms"] / 1000))
 
     nike_id = activity["end_epoch_ms"]
-    start_date = datetime.fromtimestamp(
-        activity["start_epoch_ms"] / 1000, tz=timezone.utc
-    )
+    start_date = datetime.fromtimestamp(activity["start_epoch_ms"] / 1000, tz=UTC)
     start_date_local = adjust_time(start_date, BASE_TIMEZONE)
-    end_date = datetime.fromtimestamp(activity["end_epoch_ms"] / 1000, tz=timezone.utc)
+    end_date = datetime.fromtimestamp(activity["end_epoch_ms"] / 1000, tz=UTC)
     end_date_local = adjust_time(end_date, BASE_TIMEZONE)
     d = {
         "id": int(nike_id),

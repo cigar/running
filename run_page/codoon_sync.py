@@ -8,8 +8,9 @@ import time
 import urllib.parse
 import xml.etree.ElementTree as ET
 from collections import namedtuple
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from xml.dom import minidom
+
 import eviltransform
 import gpxpy
 import numpy as np
@@ -100,13 +101,12 @@ def device_info_headers():
 
 def download_codoon_gpx(gpx_data, log_id):
     try:
-        print(f"downloading codoon {str(log_id)} gpx")
+        print(f"downloading codoon {log_id!s} gpx")
         file_path = os.path.join(GPX_FOLDER, str(log_id) + ".gpx")
         with open(file_path, "w") as fb:
             fb.write(gpx_data)
     except Exception as e:
-        print(f"wrong id {log_id} error {str(e)}")
-        pass
+        print(f"wrong id {log_id} error {e!s}")
 
 
 def formated_input(
@@ -251,8 +251,7 @@ def tcx_output(fit_array, run_data):
         with open(TCX_FOLDER + "/" + fit_id + ".tcx", "w") as f:
             f.write(str(xml_str))
     except Exception as e:
-        print(f"empty database error {str(e)}")
-        pass
+        print(f"empty database error {e!s}")
 
 
 def tcx_job(run_data):
@@ -391,7 +390,7 @@ class CodoonAuth:
         if query != "":
             query = urllib.parse.unquote(query)
 
-        pre_string = f"Authorization={token}&Davinci={davinci}&Did={did}&Timestamp={str(timestamp)}|path={path}|body={body_str}|{query}"
+        pre_string = f"Authorization={token}&Davinci={davinci}&Did={did}&Timestamp={timestamp!s}|path={path}|body={body_str}|{query}"
         return make_signature(pre_string)
 
     def __call__(self, r):
@@ -468,7 +467,7 @@ class Codoon:
         self.user_id = login_data["user_id"]
         self.auth.reload(token=self.token)
         print(
-            f"your refresh_token and user_id are {str(self.refresh_token)} {str(self.user_id)}"
+            f"your refresh_token and user_id are {self.refresh_token!s} {self.user_id!s}"
         )
 
     def get_runs_records(self, page=1):
@@ -511,7 +510,7 @@ class Codoon:
                 "elevation": point["elevation"],
                 "time": adjust_time_to_utc(
                     to_date(point["time_stamp"]), BASE_TIMEZONE
-                ).replace(tzinfo=timezone.utc),
+                ).replace(tzinfo=UTC),
             }
             points_dict_list.append(points_dict)
         gpx = gpxpy.gpx.GPX()
@@ -623,7 +622,7 @@ class Codoon:
             "distance": run_data["total_length"],
             "moving_time": timedelta(seconds=run_data["total_time"]),
             "elapsed_time": timedelta(
-                seconds=int((end_date.timestamp() - start_date.timestamp()))
+                seconds=int(end_date.timestamp() - start_date.timestamp())
             ),
             "average_speed": run_data["total_length"] / run_data["total_time"],
             "elevation_gain": elevation_gain,

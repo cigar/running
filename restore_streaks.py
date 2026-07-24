@@ -1,5 +1,6 @@
-from run_page.generator import Generator
 import json
+
+from run_page.generator import Generator
 
 
 def restore_streaks():

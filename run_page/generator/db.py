@@ -2,7 +2,7 @@ import datetime
 import random
 import string
 
-from geopy.geocoders import options, Nominatim
+from geopy.geocoders import Nominatim, options
 from sqlalchemy import (
     Column,
     Float,

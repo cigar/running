@@ -27,11 +27,13 @@ for r1, r2 in combinations(runs, 2):
     time_diff = abs((dt1 - dt2).total_seconds())
 
     is_dup = False
-    if (dist_diff / dist_max) < 0.15 and time_diff < 7200:
-        is_dup = True
-    elif time_diff < 300:
-        is_dup = True
-    elif dist_diff < 1 and time_diff < 86400:
+    if (
+        (dist_diff / dist_max) < 0.15
+        and time_diff < 7200
+        or time_diff < 300
+        or dist_diff < 1
+        and time_diff < 86400
+    ):
         is_dup = True
 
     if is_dup:

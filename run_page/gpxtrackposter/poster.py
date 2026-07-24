@@ -69,7 +69,6 @@ class Poster:
             except locale.Error as e:
                 print(f'Cannot set locale to "{language}": {e}')
                 language = None
-                pass
 
         # Fall-back to NullTranslations, if the specified language translation cannot be found.
         if language:

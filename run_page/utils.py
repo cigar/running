@@ -1,7 +1,7 @@
 import json
 import os
 import time
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 import pytz
 
@@ -19,15 +19,14 @@ def compute_activities_stats(activities_list):
         a for a in activities_list if isinstance(a, dict) and a.get("type") == "Run"
     ]
 
-    now = datetime.now()
+    now = datetime.now(UTC).replace(tzinfo=None)
     latest_dt = now
     for a in runs:
         start_date_local = a.get("start_date_local")
         if start_date_local:
             try:
                 dt = datetime.fromisoformat(str(start_date_local).replace(" ", "T"))
-                if dt > latest_dt:
-                    latest_dt = dt
+                latest_dt = max(latest_dt, dt)
             except ValueError:
                 pass
 
@@ -194,7 +193,7 @@ def get_strava_last_time(client, is_milliseconds=True):
             last_time = last_time * 1000
         return last_time
     except Exception as e:
-        print(f"Something wrong to get last time err: {str(e)}")
+        print(f"Something wrong to get last time err: {e!s}")
         return 0
 
 

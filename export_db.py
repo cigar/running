@@ -1,5 +1,5 @@
-import sqlite3
 import os
+import sqlite3
 import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "run_page"))
