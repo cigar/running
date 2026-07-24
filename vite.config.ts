@@ -98,5 +98,6 @@ export default defineConfig({
     manifest: true,
     modulePreload: false,
     outDir: './dist',
+    chunkSizeWarningLimit: 4000,
   },
 });
