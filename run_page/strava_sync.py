@@ -1,8 +1,9 @@
 import argparse
 import json
 
-from config import JSON_FILE, SQL_FILE
+from config import SQL_FILE
 from generator import Generator
+from utils import save_activities_json
 
 
 # for only run type, we use the same logic as garmin_sync
@@ -23,8 +24,7 @@ def run_strava_sync(
     generator.sync(False)
 
     activities_list = generator.load()
-    with open(JSON_FILE, "w") as f:
-        json.dump(activities_list, f)
+    save_activities_json(activities_list)
 
 
 if __name__ == "__main__":

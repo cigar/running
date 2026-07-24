@@ -1,5 +1,9 @@
 import sqlite3
-import json
+import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "run_page"))
+from utils import save_activities_json
 
 conn = sqlite3.connect("run_page/data.db")
 conn.row_factory = sqlite3.Row
@@ -12,7 +16,5 @@ activities = []
 for r in rows:
     activities.append(dict(r))
 
-with open("src/static/activities.json", "w", encoding="utf-8") as f:
-    json.dump(activities, f, ensure_ascii=False, indent=2)
-
+save_activities_json(activities)
 print(f"Exported {len(activities)} activities.")

@@ -1,6 +1,7 @@
 import json
+import os
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytz
 
@@ -11,6 +12,103 @@ except Exception:
 from generator import Generator
 from stravalib.client import Client
 from stravalib.exc import RateLimitExceeded
+
+
+def compute_activities_stats(activities_list):
+    runs = [a for a in activities_list if isinstance(a, dict) and a.get("type") == "Run"]
+
+    now = datetime.now()
+    latest_dt = now
+    for a in runs:
+        start_date_local = a.get("start_date_local")
+        if start_date_local:
+            try:
+                dt = datetime.fromisoformat(str(start_date_local).replace(" ", "T"))
+                if dt > latest_dt:
+                    latest_dt = dt
+            except ValueError:
+                pass
+
+    # 1) 最近12个月累计的跑步公里数 (Last 12 months cumulative running km)
+    start_12m = latest_dt - timedelta(days=365)
+    dist_12m_m = 0.0
+    for a in runs:
+        start_date_local = a.get("start_date_local")
+        if start_date_local:
+            try:
+                dt = datetime.fromisoformat(str(start_date_local).replace(" ", "T"))
+                if start_12m <= dt <= latest_dt:
+                    dist_12m_m += a.get("distance", 0) or 0.0
+            except ValueError:
+                pass
+    last_12_months_km = round(dist_12m_m / 1000.0, 2)
+
+    # 2) 最近15天的跑步公里数，区分清晨(00:00-11:59)与午后(12:00-23:59)
+    end_date = latest_dt.date()
+    days_15_list = []
+    total_morning_m = 0.0
+    total_afternoon_m = 0.0
+
+    for i in range(14, -1, -1):
+        day_date = end_date - timedelta(days=i)
+        morning_m = 0.0
+        afternoon_m = 0.0
+
+        for a in runs:
+            start_date_local = a.get("start_date_local")
+            if start_date_local:
+                try:
+                    dt = datetime.fromisoformat(str(start_date_local).replace(" ", "T"))
+                    if dt.date() == day_date:
+                        dist = a.get("distance", 0) or 0.0
+                        if dt.hour < 12:
+                            morning_m += dist
+                        else:
+                            afternoon_m += dist
+                except ValueError:
+                    pass
+
+        total_morning_m += morning_m
+        total_afternoon_m += afternoon_m
+
+        days_15_list.append({
+            "date": str(day_date),
+            "morning_km": round(morning_m / 1000.0, 2),
+            "afternoon_km": round(afternoon_m / 1000.0, 2),
+            "total_km": round((morning_m + afternoon_m) / 1000.0, 2),
+        })
+
+    last_15_days_stats = {
+        "total_km": round((total_morning_m + total_afternoon_m) / 1000.0, 2),
+        "morning_km": round(total_morning_m / 1000.0, 2),
+        "afternoon_km": round(total_afternoon_m / 1000.0, 2),
+        "days": days_15_list,
+    }
+
+    return {
+        "last_12_months_km": last_12_months_km,
+        "last_15_days": last_15_days_stats,
+        "activities": activities_list,
+    }
+
+
+def save_activities_json(activities_list, file_paths=None):
+    from config import JSON_FILE, PUBLIC_JSON_FILE
+
+    if file_paths is None:
+        file_paths = [JSON_FILE, PUBLIC_JSON_FILE]
+
+    data = compute_activities_stats(activities_list)
+
+    for filepath in file_paths:
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(
+                data,
+                f,
+                ensure_ascii=False,
+                indent=2 if "public" in filepath else None,
+            )
 
 
 def adjust_time(time, tz_name):
@@ -57,8 +155,7 @@ def make_activities_file(
         data_dir, file_suffix=file_suffix, activity_title_dict=activity_title_dict
     )
     activities_list = generator.load()
-    with open(json_file, "w") as f:
-        json.dump(activities_list, f)
+    save_activities_json(activities_list)
 
 
 def make_strava_client(client_id, client_secret, refresh_token):

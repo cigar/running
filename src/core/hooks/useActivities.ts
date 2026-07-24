@@ -164,11 +164,12 @@ const loadActivityData = () => {
     .then((response) => {
       if (!response.ok)
         throw new Error(`Failed to load activities: ${response.status}`);
-      return response.json() as Promise<Activity[]>;
+      return response.json() as Promise<Activity[] | { activities: Activity[] }>;
     })
-    .then((data) => {
-      activityDataCache = data;
-      return data;
+    .then((data: any) => {
+      const list = Array.isArray(data) ? data : (data.activities as Activity[]);
+      activityDataCache = list;
+      return list;
     })
     .catch((error: unknown) => {
       activityDataError = error;

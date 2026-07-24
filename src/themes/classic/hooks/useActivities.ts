@@ -33,11 +33,14 @@ const loadActivityData = () => {
       if (!response.ok) {
         throw new Error(`Failed to load activities: ${response.status}`);
       }
-      return response.json() as Promise<Activity[]>;
+      return response.json() as Promise<Activity[] | { activities: Activity[] }>;
     })
-    .then((activityData) => {
-      activityDataCache = activityData;
-      return activityData;
+    .then((activityData: any) => {
+      const list = Array.isArray(activityData)
+        ? activityData
+        : (activityData.activities as Activity[]);
+      activityDataCache = list;
+      return list;
     })
     .catch((error: unknown) => {
       activityDataError = error;

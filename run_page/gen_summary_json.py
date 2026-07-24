@@ -80,7 +80,9 @@ def main():
         return
 
     with open(ACTIVITIES_FILE, "r", encoding="utf-8") as f:
-        activities = json.load(f)
+        data = json.load(f)
+
+    activities = data if isinstance(data, list) else data.get("activities", [])
 
     total_distance_meters = 0
     years = set()
@@ -194,8 +196,13 @@ def main():
                         "start_date_local": start_date_local,
                     }
 
+    from utils import compute_activities_stats
+    stats = compute_activities_stats(activities)
+
     summary = {
         "total_distance_km": round(total_distance_meters / 1000.0, 2),
+        "last_12_months_km": stats["last_12_months_km"],
+        "last_15_days": stats["last_15_days"],
         "total_years": len(years),
         "years": sorted(list(years)),
         "total_cities": len(cities),

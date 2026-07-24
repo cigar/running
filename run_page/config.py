@@ -18,6 +18,7 @@ FOLDER_DICT = {
 }
 SQL_FILE = os.path.join(parent, "run_page", "data.db")
 JSON_FILE = os.path.join(parent, "src", "static", "activities.json")
+PUBLIC_JSON_FILE = os.path.join(parent, "public", "activities.json")
 SYNCED_FILE = os.path.join(parent, "imported.json")
 
 
