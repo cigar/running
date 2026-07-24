@@ -197,6 +197,7 @@ def main():
                     }
 
     from utils import compute_activities_stats
+
     stats = compute_activities_stats(activities)
 
     summary = {

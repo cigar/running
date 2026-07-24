@@ -15,7 +15,9 @@ from stravalib.exc import RateLimitExceeded
 
 
 def compute_activities_stats(activities_list):
-    runs = [a for a in activities_list if isinstance(a, dict) and a.get("type") == "Run"]
+    runs = [
+        a for a in activities_list if isinstance(a, dict) and a.get("type") == "Run"
+    ]
 
     now = datetime.now()
     latest_dt = now
@@ -71,12 +73,14 @@ def compute_activities_stats(activities_list):
         total_morning_m += morning_m
         total_afternoon_m += afternoon_m
 
-        days_15_list.append({
-            "date": str(day_date),
-            "morning_km": round(morning_m / 1000.0, 2),
-            "afternoon_km": round(afternoon_m / 1000.0, 2),
-            "total_km": round((morning_m + afternoon_m) / 1000.0, 2),
-        })
+        days_15_list.append(
+            {
+                "date": str(day_date),
+                "morning_km": round(morning_m / 1000.0, 2),
+                "afternoon_km": round(afternoon_m / 1000.0, 2),
+                "total_km": round((morning_m + afternoon_m) / 1000.0, 2),
+            }
+        )
 
     last_15_days_stats = {
         "total_km": round((total_morning_m + total_afternoon_m) / 1000.0, 2),
