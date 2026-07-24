@@ -30,19 +30,45 @@ def compute_activities_stats(activities_list):
             except ValueError:
                 pass
 
-    # 1) 最近12个月累计的跑步公里数 (Last 12 months cumulative running km)
-    start_12m = latest_dt - timedelta(days=365)
-    dist_12m_m = 0.0
-    for a in runs:
-        start_date_local = a.get("start_date_local")
-        if start_date_local:
-            try:
-                dt = datetime.fromisoformat(str(start_date_local).replace(" ", "T"))
-                if start_12m <= dt <= latest_dt:
-                    dist_12m_m += a.get("distance", 0) or 0.0
-            except ValueError:
-                pass
-    last_12_months_km = round(dist_12m_m / 1000.0, 2)
+    # 1) 最近12个月按月拆分的跑步公里数 (Last 12 months monthly breakdown of running km)
+    cur_year = latest_dt.year
+    cur_month = latest_dt.month
+
+    months_12_list = []
+    total_12m_dist_m = 0.0
+
+    for i in range(11, -1, -1):
+        m = cur_month - i
+        y = cur_year
+        while m <= 0:
+            m += 12
+            y -= 1
+        month_str = f"{y:04d}-{m:02d}"
+
+        month_dist_m = 0.0
+        for a in runs:
+            start_date_local = a.get("start_date_local")
+            if start_date_local:
+                try:
+                    dt = datetime.fromisoformat(str(start_date_local).replace(" ", "T"))
+                    if dt.year == y and dt.month == m:
+                        month_dist_m += a.get("distance", 0) or 0.0
+                except ValueError:
+                    pass
+
+        total_12m_dist_m += month_dist_m
+        months_12_list.append(
+            {
+                "month": month_str,
+                "km": round(month_dist_m / 1000.0, 2),
+            }
+        )
+
+    last_12_months_km = round(total_12m_dist_m / 1000.0, 2)
+    last_12_months = {
+        "total_km": last_12_months_km,
+        "months": months_12_list,
+    }
 
     # 2) 最近15天的跑步公里数，区分清晨(00:00-11:59)与午后(12:00-23:59)
     end_date = latest_dt.date()
@@ -90,6 +116,7 @@ def compute_activities_stats(activities_list):
 
     return {
         "last_12_months_km": last_12_months_km,
+        "last_12_months": last_12_months,
         "last_15_days": last_15_days_stats,
         "activities": activities_list,
     }

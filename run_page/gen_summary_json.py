@@ -203,6 +203,7 @@ def main():
     summary = {
         "total_distance_km": round(total_distance_meters / 1000.0, 2),
         "last_12_months_km": stats["last_12_months_km"],
+        "last_12_months": stats["last_12_months"],
         "last_15_days": stats["last_15_days"],
         "total_years": len(years),
         "years": sorted(list(years)),
