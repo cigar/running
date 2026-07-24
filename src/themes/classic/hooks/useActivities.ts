@@ -33,7 +33,9 @@ const loadActivityData = () => {
       if (!response.ok) {
         throw new Error(`Failed to load activities: ${response.status}`);
       }
-      return response.json() as Promise<Activity[] | { activities: Activity[] }>;
+      return response.json() as Promise<
+        Activity[] | { activities: Activity[] }
+      >;
     })
     .then((activityData: any) => {
       const list = Array.isArray(activityData)
