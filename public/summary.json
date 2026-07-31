@@ -55,16 +55,10 @@
     ]
   },
   "last_15_days": {
-    "total_km": 19.37,
-    "morning_km": 12.67,
+    "total_km": 12.97,
+    "morning_km": 6.27,
     "afternoon_km": 6.71,
     "days": [
-      {
-        "date": "2026-07-16",
-        "morning_km": 6.4,
-        "afternoon_km": 0.0,
-        "total_km": 6.4
-      },
       {
         "date": "2026-07-17",
         "morning_km": 0.0,
@@ -145,6 +139,12 @@
       },
       {
         "date": "2026-07-30",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-07-31",
         "morning_km": 0.0,
         "afternoon_km": 0.0,
         "total_km": 0.0
