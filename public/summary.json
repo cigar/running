@@ -1,8 +1,8 @@
 {
-  "total_distance_km": 36143.95,
-  "last_12_months_km": 1243.07,
+  "total_distance_km": 36149.14,
+  "last_12_months_km": 1248.27,
   "last_12_months": {
-    "total_km": 1243.07,
+    "total_km": 1248.27,
     "months": [
       {
         "month": "2025-09",
@@ -50,21 +50,15 @@
       },
       {
         "month": "2026-08",
-        "km": 15.07
+        "km": 20.26
       }
     ]
   },
   "last_15_days": {
-    "total_km": 21.77,
-    "morning_km": 15.07,
+    "total_km": 26.97,
+    "morning_km": 20.26,
     "afternoon_km": 6.71,
     "days": [
-      {
-        "date": "2026-07-20",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
       {
         "date": "2026-07-21",
         "morning_km": 0.0,
@@ -148,6 +142,12 @@
         "morning_km": 0.0,
         "afternoon_km": 0.0,
         "total_km": 0.0
+      },
+      {
+        "date": "2026-08-04",
+        "morning_km": 5.2,
+        "afternoon_km": 0.0,
+        "total_km": 5.2
       }
     ]
   },
