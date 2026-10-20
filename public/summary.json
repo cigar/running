@@ -60,12 +60,6 @@
     "afternoon_km": 16.18,
     "days": [
       {
-        "date": "2026-10-05",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
         "date": "2026-10-06",
         "morning_km": 0.0,
         "afternoon_km": 0.0,
@@ -145,6 +139,12 @@
       },
       {
         "date": "2026-10-19",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-10-20",
         "morning_km": 0.0,
         "afternoon_km": 0.0,
         "total_km": 0.0
