@@ -1,8 +1,8 @@
 {
-  "total_distance_km": 36218.26,
-  "last_12_months_km": 980.14,
+  "total_distance_km": 36228.48,
+  "last_12_months_km": 990.36,
   "last_12_months": {
-    "total_km": 980.14,
+    "total_km": 990.36,
     "months": [
       {
         "month": "2025-11",
@@ -50,21 +50,15 @@
       },
       {
         "month": "2026-10",
-        "km": 20.49
+        "km": 30.71
       }
     ]
   },
   "last_15_days": {
-    "total_km": 16.18,
+    "total_km": 26.4,
     "morning_km": 0.0,
-    "afternoon_km": 16.18,
+    "afternoon_km": 26.4,
     "days": [
-      {
-        "date": "2026-10-08",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
       {
         "date": "2026-10-09",
         "morning_km": 0.0,
@@ -146,6 +140,12 @@
       {
         "date": "2026-10-22",
         "morning_km": 0.0,
+        "afternoon_km": 10.22,
+        "total_km": 10.22
+      },
+      {
+        "date": "2026-10-23",
+        "morning_km": 0.0,
         "afternoon_km": 0.0,
         "total_km": 0.0
       }
@@ -198,7 +198,7 @@
     "total": {
       "full_marathon": 29,
       "half_marathon": 299,
-      "10k": 1795
+      "10k": 1796
     },
     "years": {
       "2014": {
@@ -264,7 +264,7 @@
       "2026": {
         "full_marathon": 0,
         "half_marathon": 0,
-        "10k": 11
+        "10k": 12
       }
     }
   },
