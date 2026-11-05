@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # some code from https://github.com/fieryd/PKURunningHelper great thanks
 import argparse
 import ast
@@ -28,6 +29,7 @@ from config import (
     start_point,
 )
 from generator import Generator
+
 from utils import adjust_time
 
 # struct body
@@ -65,7 +67,7 @@ def download_joyrun_gpx(gpx_data, joyrun_id):
         file_path = os.path.join(GPX_FOLDER, str(joyrun_id) + ".gpx")
         with open(file_path, "w") as fb:
             fb.write(gpx_data)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"wrong id {joyrun_id}: {e}")
 
 
@@ -75,7 +77,7 @@ def download_joyrun_tcx(tcx_data, joyrun_id):
         xml_str = minidom.parseString(ET.tostring(tcx_data)).toprettyxml()
         with open(TCX_FOLDER + "/" + joyrun_id + ".tcx", "w") as f:
             f.write(str(xml_str))
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"empty database error {e!s}")
 
 
@@ -94,8 +96,8 @@ class JoyrunAuth:
         self.uid = uid
         self.sid = sid
 
-    def reload(self, params={}, uid=0, sid=""):
-        self.params = params
+    def reload(self, params=None, uid=0, sid=""):
+        self.params = params if params is not None else {}
         if uid and sid:
             self.uid = uid
             self.sid = sid
@@ -184,7 +186,7 @@ class Joyrun:
 
     def __update_loginInfo(self):
         self.auth.reload(uid=self.uid, sid=self.sid)
-        loginCookie = "sid=%s&uid=%s" % (self.sid, self.uid)
+        loginCookie = f"sid={self.sid}&uid={self.uid}"
         self.session.headers.update({"ypcookie": loginCookie})
         self.session.cookies.clear()
         self.session.cookies.set("ypcookie", quote(loginCookie).lower())
@@ -204,7 +206,7 @@ class Joyrun:
         )
         login_data = r.json()
         if login_data["ret"] != "0":
-            raise Exception(f'{login_data["ret"]}: {login_data["msg"]}')
+            raise Exception(f'{login_data["ret"]}: {login_data["msg"]}')  # noqa: TRY002
         self.sid = login_data["data"]["sid"]
         self.uid = login_data["data"]["user"]["uid"]
         print(f"your uid and sid are {self.uid!s} {self.sid!s}")
@@ -220,7 +222,7 @@ class Joyrun:
             auth=self.auth.reload(payload),
         )
         if not r.ok:
-            raise Exception("get runs records error")
+            raise Exception("get runs records error")  # noqa: TRY002
         return [i["fid"] for i in r.json()["datas"]]
 
     @staticmethod
@@ -238,7 +240,7 @@ class Joyrun:
                 print(f"Error parsing points content: {e}")
                 return []
             points = [[p[0] / 1000000, p[1] / 1000000] for p in points]
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"Error processing points: {e}")
             points = []
         return points
@@ -632,7 +634,9 @@ class Joyrun:
         seen_runs = {}  # Dictionary to keep track of unique runs with start time as key
         for i in new_run_ids:
             run_data = self.get_single_run_record(i)
-            start_time = datetime.fromtimestamp(run_data["runrecord"]["starttime"])
+            start_time = datetime.fromtimestamp(  # noqa: DTZ006
+                run_data["runrecord"]["starttime"]
+            )
             distance = run_data["runrecord"]["meter"]
 
             is_duplicate = False

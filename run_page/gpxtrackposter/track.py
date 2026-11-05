@@ -25,7 +25,10 @@ from .utils import get_normalized_sport_type, parse_datetime_to_local
 start_point = namedtuple("start_point", "lat lon")
 run_map = namedtuple("polyline", "summary_polyline")
 
-IGNORE_BEFORE_SAVING = os.getenv("IGNORE_BEFORE_SAVING", False)
+IGNORE_BEFORE_SAVING = os.getenv(
+    "IGNORE_BEFORE_SAVING",
+    False,  # noqa: PLW1508
+)
 
 # Garmin stores all latitude and longitude values as 32-bit integer values.
 # This unit is called semicircle.
@@ -68,7 +71,7 @@ class Track:
                 raise TrackLoadError("Empty GPX file")
             with open(file_name, "r", encoding="utf-8", errors="ignore") as file:
                 self._load_gpx_data(mod_gpxpy.parse(file))
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(
                 f"Something went wrong when loading GPX. for file {self.file_names[0]}, we just ignore this file and continue"
             )
@@ -83,7 +86,7 @@ class Track:
             if os.path.getsize(file_name) == 0:
                 raise TrackLoadError("Empty TCX file")
             self._load_tcx_data(tcx.read(file_name), file_name=file_name)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(
                 f"Something went wrong when loading TCX. for file {self.file_names[0]}, we just ignore this file and continue"
             )
@@ -114,7 +117,7 @@ class Track:
                 )
                 return
             self._load_fit_data(messages)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(
                 f"Something went wrong when loading FIT. for file {self.file_names[0]}, we just ignore this file and continue"
             )
@@ -123,7 +126,7 @@ class Track:
     def load_from_db(self, activity):
         # use strava as file name
         self.file_names = [str(activity.run_id)]
-        start_time = datetime.datetime.strptime(
+        start_time = datetime.datetime.strptime(  # noqa: DTZ007
             activity.start_date_local, "%Y-%m-%d %H:%M:%S"
         )
         self.start_time_local = start_time
@@ -176,7 +179,7 @@ class Track:
         polyline_container = []
         position_values = [(i.latitude, i.longitude) for i in tcx.trackpoints]
         if not position_values and int(self.length) == 0:
-            raise Exception(
+            raise Exception(  # noqa: TRY002
                 f"This {file_name} TCX file do not contain distance and position values we ignore it"
             )
         if position_values:
@@ -190,7 +193,7 @@ class Track:
             # get start point
             try:
                 self.start_latlng = start_point(*polyline_container[0])
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 print(f"Error getting start point: {e}")
             self.polyline_str = polyline.encode(polyline_container)
         self.elevation_gain = tcx.ascent
@@ -214,7 +217,7 @@ class Track:
                     )
                 start_time = trackpoints[i].time
             return int(moving_time)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"Error calculating moving time: {e}")
             return 0
 
@@ -285,7 +288,7 @@ class Track:
         # get start point
         try:
             self.start_latlng = start_point(*polyline_container[0])
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"Error getting start point: {e}")
         self.start_time_local, self.end_time_local = parse_datetime_to_local(
             self.start_time, self.end_time, polyline_container[0]
@@ -372,18 +375,14 @@ class Track:
             tz=datetime.UTC,
         )
         self.length = message["total_distance"]
-        self.average_heartrate = (
-            message["avg_heart_rate"] if "avg_heart_rate" in message else None
-        )
+        self.average_heartrate = message.get("avg_heart_rate", None)
         if message["sport"].lower() == "running":
             self.type = "Run"
         else:
             self.type = message["sport"].lower()
-        self.subtype = message["sub_sport"] if "sub_sport" in message else None
+        self.subtype = message.get("sub_sport", None)
 
-        self.elevation_gain = (
-            message["total_ascent"] if "total_ascent" in message else None
-        )
+        self.elevation_gain = message.get("total_ascent", None)
         # moving_dict
         self.moving_dict["distance"] = message["total_distance"]
         self.moving_dict["moving_time"] = datetime.timedelta(
@@ -446,7 +445,7 @@ class Track:
             self.elevation_gain = (
                 self.elevation_gain if self.elevation_gain else 0
             ) + (other.elevation_gain if other.elevation_gain else 0)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(
                 f"something wrong append this {self.end_time},in files {self.file_names!s}: {e}"
             )

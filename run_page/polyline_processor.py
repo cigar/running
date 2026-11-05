@@ -10,7 +10,7 @@ ignore_polyline_env = os.getenv("IGNORE_POLYLINE")
 if ignore_polyline_env:
     try:
         IGNORE_POLYLINE = polyline.decode(ignore_polyline_env)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         warnings.warn(
             f"IGNORE_POLYLINE is not a valid polyline: {e}. "
             "Privacy filtering for specific polylines will be disabled.",

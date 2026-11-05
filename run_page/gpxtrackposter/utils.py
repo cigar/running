@@ -129,7 +129,7 @@ def parse_datetime_to_local(start_time, end_time, point):
         lat, lng = point
         try:
             timezone = get_tz(lng=lng, lat=lat)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             # just a little trick when tzfpy support windows will delete this
             print(f"tzfpy error: {e} fallback to timezonefinder")
             lat, lng = point

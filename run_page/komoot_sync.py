@@ -53,7 +53,7 @@ class KomootApi:
         if r.status_code != 200:
             print("Error " + str(r.status_code) + ": " + str(r.json()))
             if critical:
-                exit(1)
+                sys.exit(1)
         return r
 
     def login(self, email, password):
@@ -203,11 +203,13 @@ class GpxCompiler:
                         name = ref["name"]
                     if "mid_point" in ref:
                         point = Point(ref["mid_point"])
-                    if "front_image" in ref["_embedded"]:
-                        if "src" in ref["_embedded"]["front_image"]:
-                            image_url = ref["_embedded"]["front_image"]["src"].split(
-                                "?", 1
-                            )[0]
+                    if (
+                        "front_image" in ref["_embedded"]
+                        and "src" in ref["_embedded"]["front_image"]
+                    ):
+                        image_url = ref["_embedded"]["front_image"]["src"].split(
+                            "?", 1
+                        )[0]
 
                     tips = self.api.fetch_highlight_tips(str(ref["id"]))
                     if "_embedded" in tips and "items" in tips["_embedded"]:
@@ -272,7 +274,9 @@ class GpxCompiler:
                 if augment_timestamp:
                     point.time = start_date + timedelta(seconds=coord.time / 1000)
                 else:
-                    point.time = datetime.fromtimestamp(coord.time / 1000)
+                    point.time = datetime.fromtimestamp(  # noqa: DTZ006
+                        coord.time / 1000
+                    )
             segment.points.append(point)
 
         if not self.no_poi:
@@ -281,7 +285,9 @@ class GpxCompiler:
                 if poi.point.alt != poi.point.CONST_UNDEFINED:
                     wp.elevation = poi.point.alt
                 if poi.point.time != poi.point.CONST_UNDEFINED:
-                    wp.time = datetime.fromtimestamp(poi.point.time / 1000)
+                    wp.time = datetime.fromtimestamp(  # noqa: DTZ006
+                        poi.point.time / 1000
+                    )
 
                 wp.name = poi.name
                 wp.description = poi.description
@@ -350,7 +356,7 @@ def is_tour_in_date_range(tour, start_date, end_date):
         return True  # If tour has no date info, include it
 
     tour_date_str = tour["date"][:10]  # Extract YYYY-MM-DD
-    tour_date = datetime.strptime(tour_date_str, "%Y-%m-%d").date()
+    tour_date = datetime.strptime(tour_date_str, "%Y-%m-%d").date()  # noqa: DTZ007
 
     # If only start_date is provided, include all tours on or after start_date
     if start_date and not end_date and tour_date < start_date:
@@ -361,10 +367,9 @@ def is_tour_in_date_range(tour, start_date, end_date):
         return False
 
     # If both dates are provided, ensure tour is within range
-    if start_date and end_date and (tour_date < start_date or tour_date > end_date):
-        return False
-
-    return True
+    return not (
+        start_date and end_date and (tour_date < start_date or tour_date > end_date)
+    )
 
 
 def date_filter(tours, start_date, end_date):
@@ -400,7 +405,7 @@ def make_gpx(tour_id, api, no_poi, tour_base):
     fullname = f"{tour_id}.gpx"
     path = f"{GPX_FOLDER}/{fullname}"
 
-    if fullname in output_dir_contents:
+    if fullname in output_dir_contents:  # noqa: FURB132
         output_dir_contents.remove(fullname)
 
     if os.path.exists(path):
@@ -411,9 +416,8 @@ def make_gpx(tour_id, api, no_poi, tour_base):
         tour = api.fetch_tour(str(tour_id))
     gpx = GpxCompiler(tour, api, no_poi)
 
-    f = open(path, "w", encoding="utf-8")
-    f.write(gpx.generate())
-    f.close()
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(gpx.generate())
 
     print(f"GPX file written to '{path}'")
 
@@ -444,14 +448,18 @@ def main(args):
     end_date = None
     if args.start_date:
         try:
-            start_date = datetime.strptime(args.start_date, "%Y-%m-%d").date()
+            start_date = datetime.strptime(  # noqa: DTZ007
+                args.start_date, "%Y-%m-%d"
+            ).date()
         except ValueError:
             print(f"Invalid start date format: {args.start_date}. Use YYYY-MM-DD")
             sys.exit(2)
 
     if args.end_date:
         try:
-            end_date = datetime.strptime(args.end_date, "%Y-%m-%d").date()
+            end_date = datetime.strptime(  # noqa: DTZ007
+                args.end_date, "%Y-%m-%d"
+            ).date()
         except ValueError:
             print(f"Invalid end date format: {args.end_date}. Use YYYY-MM-DD")
             sys.exit(2)
@@ -459,7 +467,7 @@ def main(args):
     gpxpat = re.compile(r"\.gpx$")
     for f in os.listdir(GPX_FOLDER):
         if not os.path.isfile(f) or not gpxpat.match(f):
-            next
+            next  # noqa: B018
         output_dir_contents.add(f)
 
     api = KomootApi()

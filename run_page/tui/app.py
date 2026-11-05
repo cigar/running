@@ -137,9 +137,7 @@ def _render_bar_chart(
 
     for label, value in zip(labels, values):
         filled = (
-            0
-            if max_value <= 0
-            else int(round(float(value) / float(max_value) * bar_width))
+            0 if max_value <= 0 else round(float(value) / float(max_value) * bar_width)
         )
         if value > 0:
             filled = max(1, filled)
@@ -549,7 +547,7 @@ class NavSidebar(Widget):
             super().__init__()
             self.view_name = view_name
 
-    ITEMS = [
+    ITEMS = [  # noqa: RUF012
         ("list", "1  List"),
         ("stats", "2  Stats"),
     ]
@@ -889,7 +887,7 @@ class RunningTUI(App):
     #stats-body { height: auto; }
     """
 
-    BINDINGS = [
+    BINDINGS = [  # noqa: RUF012
         Binding("q", "quit", "Quit"),
         Binding("r", "refresh", "Refresh"),
         Binding("s", "toggle_sort", "Sort"),
@@ -941,7 +939,7 @@ class RunningTUI(App):
             self.activities = load_activities(self.data_path)
             self.data = aggregate_activities(self.activities)
             self.filtered_data = self.data
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001
             self.notify(f"Failed to load data: {exc}", severity="error", timeout=10)
             return
 
@@ -1116,7 +1114,7 @@ class RunningTUI(App):
             self._sync_filter_bar(default_latest_year=True)
             self._rebuild_filters()
             self.notify(f"Refreshed — {len(self.activities)} activities")
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001
             self.notify(f"Refresh failed: {exc}", severity="error")
 
     def action_toggle_sort(self) -> None:

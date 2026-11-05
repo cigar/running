@@ -27,7 +27,7 @@ class YearRange:
         """Inits YearRange with empty bounds -- to be built after init"""
         self.from_year = None
         self.to_year = None
-        self.years_dict = dict()
+        self.years_dict = {}
 
     def parse(self, s: str) -> bool:
         """Parse a plaintext range of years into a pair of years

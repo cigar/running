@@ -49,7 +49,7 @@ def reverse_geocode(lat, lon, max_retries=3):
             else:
                 print(f"Geocoding failed after {max_retries} attempts: {e}")
                 return None
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"Unexpected error during geocoding: {e}")
             return None
 
@@ -76,7 +76,7 @@ def get_coordinates_from_polyline(summary_polyline):
             # Return the first point (start of the route)
             lat, lon = decoded_points[0]
             return lat, lon
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Error decoding polyline: {e}")
 
     return None
@@ -239,7 +239,7 @@ def main():
     except KeyboardInterrupt:
         print("\n\nInterrupted by user")
         sys.exit(1)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"\nError: {e}")
         import traceback
 

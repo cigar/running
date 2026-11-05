@@ -7,7 +7,7 @@ import pytz
 
 try:
     from rich import print
-except Exception:
+except Exception:  # noqa: S110, BLE001
     pass
 from generator import Generator
 from stravalib.client import Client
@@ -171,14 +171,14 @@ def to_date(ts):
         ts_fmts = ["%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M:%S.%f"]
         for ts_fmt in ts_fmts:
             try:
-                return datetime.strptime(ts, ts_fmt)
+                return datetime.strptime(ts, ts_fmt)  # noqa: DTZ007
             except ValueError:
                 pass
         raise ValueError(f"cannot parse timestamp {ts} into date")
 
 
 def make_activities_file(
-    sql_file, data_dir, json_file, file_suffix="gpx", activity_title_dict={}
+    sql_file, data_dir, json_file, file_suffix="gpx", activity_title_dict=None
 ):
     generator = Generator(sql_file)
     generator.sync_from_data_dir(
@@ -219,7 +219,7 @@ def get_strava_last_time(client, is_milliseconds=True):
         if is_milliseconds:
             last_time = last_time * 1000
         return last_time
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Something wrong to get last time err: {e!s}")
         return 0
 

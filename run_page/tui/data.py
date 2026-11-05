@@ -163,7 +163,7 @@ class Activity:
         # Chinese address: city is typically 3rd from end
         # e.g. "..., 沈阳市, 辽宁省, 110142, 中国"
         for p in reversed(parts):
-            if p.endswith("市") or p.endswith("县"):
+            if p.endswith(("市", "县")):
                 return p
         if len(parts) >= 3:
             return parts[-3]
@@ -176,7 +176,7 @@ class Activity:
             return ""
         parts = [p.strip() for p in loc.split(",")]
         for p in reversed(parts):
-            if p.endswith("省") or p.endswith("自治区") or p.endswith("特别行政区"):
+            if p.endswith(("省", "自治区", "特别行政区")):
                 return p
         if len(parts) >= 2:
             return parts[-2]

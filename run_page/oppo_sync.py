@@ -22,6 +22,7 @@ from config import (
 )
 from generator import Generator
 from tzlocal import get_localzone
+
 from utils import adjust_time
 
 TOKEN_REFRESH_URL = "https://sport.health.heytapmobi.com/open/v1/oauth/token"
@@ -119,8 +120,8 @@ def get_access_token(session, client_id, client_secret, refresh_token):
 
 def get_to_download_runs_ranges(session, sync_months, headers, start_timestamp):
     result = []
-    current_time = datetime.now()
-    start_datatime = datetime.fromtimestamp(start_timestamp / 1000)
+    current_time = datetime.now()  # noqa: DTZ005
+    start_datatime = datetime.fromtimestamp(start_timestamp / 1000)  # noqa: DTZ006
 
     if start_datatime < current_time + timedelta(days=-30 * sync_months):
         """retrieve the data of last 6 months."""
@@ -271,7 +272,9 @@ def get_all_oppo_tracks(
         0
         if (last_track_date == 0)
         else int(
-            datetime.timestamp(datetime.strptime(last_track_date, "%Y-%m-%d %H:%M:%S"))
+            datetime.timestamp(
+                datetime.strptime(last_track_date, "%Y-%m-%d %H:%M:%S")  # noqa: DTZ007
+            )
             * 1000
         )
     )
@@ -287,7 +290,7 @@ def get_all_oppo_tracks(
                 run_data, with_download_gpx, with_download_tcx
             )
             tracks.append(track)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"Something wrong paring keep id {start!s}-{end!s}" + str(e))
     return tracks
 
@@ -381,7 +384,7 @@ def download_keep_gpx(gpx_data, keep_id):
         file_path = os.path.join(GPX_FOLDER, str(keep_id) + ".gpx")
         with open(file_path, "w") as fb:
             fb.write(gpx_data)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"wrong id {keep_id}: {e!s}")
 
 
@@ -507,13 +510,10 @@ def parse_points_to_tcx(sport_data, points_dict_list):
         else:
             break
 
-        if idx + 1 != len(points_dict_list):
-            if (
-                item["distance"]
-                < target_distance
-                <= points_dict_list[idx + 1]["distance"]
-            ):
-                lap_split_indexes.append(idx)
+        if idx + 1 != len(points_dict_list) and (
+            item["distance"] < target_distance <= points_dict_list[idx + 1]["distance"]
+        ):
+            lap_split_indexes.append(idx)
 
     if len(lap_split_indexes) == 1:
         points_dict_list_chunks = [points_dict_list]

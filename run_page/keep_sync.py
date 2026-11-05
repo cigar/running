@@ -23,6 +23,7 @@ from config import (
 )
 from Crypto.Cipher import AES
 from generator import Generator
+
 from utils import adjust_time
 
 KEEP_SPORT_TYPES = ["running", "hiking", "cycling"]
@@ -250,7 +251,7 @@ def get_all_keep_tracks(
                     run_data, old_gpx_ids, old_tcx_ids, with_gpx, with_tcx
                 )
                 tracks.append(track)
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 print(f"Something wrong paring keep id {run}: " + str(e))
     return tracks
 
@@ -445,7 +446,7 @@ def find_nearest_hr(
     min_difference = float("inf")
     if target_time > TIMESTAMP_THRESHOLD_IN_DECISECOND:
         # note that the unit of target_time is decisecond and the unit of start_time is normal millisecond
-        target_time = target_time = target_time - start_time // 100
+        target_time = target_time - start_time // 100
 
     for item in hr_data_list:
         timestamp = item.get("timestamp")
@@ -474,7 +475,7 @@ def download_keep_gpx(gpx_data, keep_id):
         with open(file_path, "w") as fb:
             fb.write(gpx_data)
         return file_path
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Something wrong to download keep gpx {e!s}")
         print(f"wrong id {keep_id}")
 
@@ -486,7 +487,7 @@ def download_keep_tcx(tcx_data, keep_id):
         with open(file_path, "w") as fb:
             fb.write(tcx_data)
         return file_path
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Something wrong to download keep tcx {e!s}")
         print(f"wrong id {keep_id}")
 

@@ -18,6 +18,7 @@ from config import (
     run_map,
 )
 from generator import Generator
+
 from utils import adjust_time, make_activities_file
 
 # logging.basicConfig(level=logging.INFO)
@@ -40,7 +41,7 @@ class Nike:
             return self.request(
                 f"activities/before_id/v3/{activity_id}?limit=30&types=run%2Cjogging&include_deleted=false"
             )
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"Error getting activities before id {activity_id}: {e}")
             time.sleep(3)
             return self.request(
@@ -50,7 +51,7 @@ class Nike:
     def get_activity(self, activity_id):
         try:
             return self.request(f"activity/{activity_id}?metrics=ALL")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             logger.warning(f"Error getting activity {activity_id}: {e}, retrying...")
             time.sleep(3)
             return self.request(f"activity/{activity_id}?metrics=ALL")
@@ -129,7 +130,7 @@ def get_last_before_id():
         logger.info(f"Last update from {data['id']}")
         return data["id"]
     # easy solution when error happens no last id
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Error getting last before id: {e}")
         return None
 
@@ -156,7 +157,7 @@ def get_to_generate_files():
             last_time = max(timestamps)
         else:
             last_time = 0
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Error getting last time: {e}")
         last_time = 0
     return [
@@ -210,7 +211,9 @@ def generate_gpx(title, latitude_data, longitude_data, elevation_data, heart_rat
 
     for lat, lon in zip(latitude_data, longitude_data):
         if lat["start_epoch_ms"] != lon["start_epoch_ms"]:
-            raise Exception("\tThe latitude and longitude data is out of order")
+            raise Exception(  # noqa: TRY002
+                "\tThe latitude and longitude data is out of order"
+            )
 
         points_dict_list.append(
             {
@@ -360,7 +363,7 @@ def make_new_gpxs(files):
         with open(file, "r") as f:
             try:
                 json_data = json.loads(f.read())
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 print(f"Error reading JSON file {file}: {e}")
                 continue
         # ALL save name using utc if you want local please offset
@@ -375,7 +378,7 @@ def make_new_gpxs(files):
                 if track:
                     tracks_list.append(track)
             # just ignore some unexpected run
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 print(str(e))
                 continue
     if tracks_list:

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import argparse
 import json
 import os
@@ -11,6 +12,7 @@ import polyline
 import requests
 from config import GPX_FOLDER, JSON_FILE, SQL_FILE, run_map, start_point
 from generator import Generator
+
 from utils import adjust_time_to_utc
 
 # need to test
@@ -191,7 +193,7 @@ def get_new_activities(token, old_tracks_ids, with_gpx=False):
             tracks.append(track)
             if with_gpx and activity_summary["id"] not in old_gpx_ids:
                 save_activity_gpx(activity_summary, activity_detail, track)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             # print traceback.format_exc()
             import traceback
 
@@ -250,7 +252,7 @@ def save_activity_gpx(summary, detail, track):
         file_path = os.path.join(GPX_FOLDER, str(activity_id) + ".gpx")
         with open(file_path, "w") as fb:
             fb.write(gpx.to_xml())
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"saving tulipsport activity {activity_id} gpx occurs errors: {e!s}")
 
 

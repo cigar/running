@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Python 3 API wrapper for Garmin Connect to get your statistics.
 Copy most code from https://github.com/cyberjunky/python-garminconnect
@@ -22,6 +23,7 @@ import httpx
 from config import FOLDER_DICT, JSON_FILE, SQL_FILE
 from garmin_device_adaptor import process_garmin_data
 from lxml import etree
+
 from utils import make_activities_file
 
 # logging.basicConfig(level=logging.DEBUG)
@@ -90,14 +92,14 @@ class Garmin:
             print(err)
             if retrying:
                 logger.debug(
-                    "Exception occurred during data retrieval, relogin without effect: %s"
-                    % err
+                    "Exception occurred during data retrieval, relogin without effect: %s",
+                    err,
                 )
                 raise GarminConnectConnectionError("Error connecting") from err
             else:
                 logger.debug(
-                    "Exception occurred during data retrieval - perhaps session expired - trying relogin: %s"
-                    % err
+                    "Exception occurred during data retrieval - perhaps session expired - trying relogin: %s",
+                    err,
                 )
                 await self.fetch_data(url, retrying=True)
 
@@ -134,10 +136,10 @@ class Garmin:
             use_fake_garmin_device,
         )
         for data in datas:
-            with open(data.filename, "wb") as f:
+            with open(data.filename, "wb") as f:  # noqa: ASYNC230
                 f.writelines(data.content)
-            f = open(data.filename, "rb")
-            file_body = process_garmin_data(f, use_fake_garmin_device)
+            with open(data.filename, "rb") as f:  # noqa: ASYNC230
+                file_body = process_garmin_data(f, use_fake_garmin_device)
             files = {"file": (data.filename, file_body)}
 
             try:
@@ -145,38 +147,35 @@ class Garmin:
                     self.upload_url, files=files, headers=self.headers
                 )
                 os.remove(data.filename)
-                f.close()
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 print(str(e))
                 # just pass for now
                 continue
             try:
                 resp = res.json()["detailedImportResult"]
                 print("garmin upload success: ", resp)
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 print("garmin upload failed: ", e)
         await self.req.aclose()
 
     async def upload_activity_from_file(self, file):
         print("Uploading " + str(file))
-        f = open(file, "rb")
-
-        file_body = BytesIO(f.read())
+        with open(file, "rb") as f:  # noqa: ASYNC230
+            file_body = BytesIO(f.read())
         files = {"file": (file, file_body)}
 
         try:
             res = await self.req.post(
                 self.upload_url, files=files, headers=self.headers
             )
-            f.close()
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(str(e))
             # just pass for now
             return
         try:
             resp = res.json()["detailedImportResult"]
             print("garmin upload success: ", resp)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print("garmin upload failed: ", e)
 
     async def upload_activities_files(self, files):
@@ -262,7 +261,7 @@ def add_summary_info(file_data, summary_infos, fields=None):
         return etree.tostring(root, encoding="utf-8", pretty_print=True)
     except etree.XMLSyntaxError as e:
         print(f"Failed to parse file data: {e!s}")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Failed to append summary info to file data: {e!s}")
     return file_data
 
@@ -299,7 +298,7 @@ async def download_garmin_data(
                 else:
                     os.remove(os.path.join(folder, file_info.filename))
             os.remove(file_path)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Failed to download activity {activity_id}: {e!s}")
         traceback.print_exc()
 
@@ -307,7 +306,7 @@ async def download_garmin_data(
 async def get_activity_id_list(client, start=0):
     activities = await client.get_activities(start, 100)
     if len(activities) > 0:
-        ids = list(map(lambda a: str(a.get("activityId", "")), activities))
+        ids = [str(a.get("activityId", "")) for a in activities]
         print("Syncing Activity IDs")
         return ids + await get_activity_id_list(client, start + 100)
     else:
@@ -336,7 +335,7 @@ def get_garmin_summary_infos(activity_summary, activity_id):
         garmin_summary_infos["average_hr"] = summary_dto.get("averageHR")
         garmin_summary_infos["average_speed"] = summary_dto.get("averageSpeed")
         start_time = dt.datetime.fromisoformat(
-            summary_dto.get("startTimeGMT")[:-1] + "+00:00"
+            summary_dto.get("startTimeGMT")[:-1] + "+00:00"  # noqa: FURB162
         )
         duration_second = summary_dto.get("duration")
         end_time = start_time + dt.timedelta(seconds=duration_second)
@@ -344,7 +343,7 @@ def get_garmin_summary_infos(activity_summary, activity_id):
         garmin_summary_infos["end_time"] = end_time.isoformat()
         garmin_summary_infos["moving_time"] = summary_dto.get("movingDuration")
         garmin_summary_infos["elapsed_time"] = summary_dto.get("elapsedDuration")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         print(f"Failed to get activity summary {activity_id}: {e!s}")
     return garmin_summary_infos
 
@@ -369,7 +368,7 @@ async def download_new_activities(
             garmin_summary_infos_dict[id] = get_garmin_summary_infos(
                 activity_summary, id
             )
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"Failed to get activity summary {id}: {e!s}")
             continue
 

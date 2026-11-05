@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import argparse
 import os
 import time
@@ -6,6 +7,7 @@ from config import TCX_FOLDER
 from strava_sync import run_strava_sync
 from stravalib.exc import ActivityUploadFailed, RateLimitTimeout
 from tcxreader.tcxreader import TCXReader
+
 from utils import get_strava_last_time, make_strava_client, upload_file_to_strava
 
 
@@ -28,7 +30,7 @@ def get_to_generate_files(last_time):
         and int(i[0].trackpoints[0].time.timestamp()) > last_time
     }
 
-    return sorted(list(tcx_files_dict.keys())), tcx_files_dict
+    return sorted(tcx_files_dict.keys()), tcx_files_dict
 
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import argparse
 import logging
 import os
@@ -208,12 +209,12 @@ def main():
         help="Generate separate SVG files for each year (for github type only)",
     )
 
-    for _, drawer in drawers.items():
+    for drawer in drawers.values():
         drawer.create_args(args_parser)
 
     args = args_parser.parse_args()
 
-    for _, drawer in drawers.items():
+    for drawer in drawers.values():
         drawer.fetch_args(args)
 
     log = logging.getLogger("gpxtrackposter")
