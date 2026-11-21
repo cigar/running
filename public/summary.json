@@ -1,8 +1,8 @@
 {
-  "total_distance_km": 36259.93,
-  "last_12_months_km": 846.23,
+  "total_distance_km": 36273.28,
+  "last_12_months_km": 859.58,
   "last_12_months": {
-    "total_km": 846.23,
+    "total_km": 859.58,
     "months": [
       {
         "month": "2025-12",
@@ -50,75 +50,15 @@
       },
       {
         "month": "2026-11",
-        "km": 15.15
+        "km": 28.5
       }
     ]
   },
   "last_15_days": {
-    "total_km": 23.32,
+    "total_km": 19.46,
     "morning_km": 0.0,
-    "afternoon_km": 23.32,
+    "afternoon_km": 19.46,
     "days": [
-      {
-        "date": "2026-10-28",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-10-29",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-10-30",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-10-31",
-        "morning_km": 0.0,
-        "afternoon_km": 8.17,
-        "total_km": 8.17
-      },
-      {
-        "date": "2026-11-01",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-11-02",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-11-03",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-11-04",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-11-05",
-        "morning_km": 0.0,
-        "afternoon_km": 9.04,
-        "total_km": 9.04
-      },
-      {
-        "date": "2026-11-06",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
       {
         "date": "2026-11-07",
         "morning_km": 0.0,
@@ -145,6 +85,66 @@
       },
       {
         "date": "2026-11-11",
+        "morning_km": 0.0,
+        "afternoon_km": 8.1,
+        "total_km": 8.1
+      },
+      {
+        "date": "2026-11-12",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-13",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-14",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-15",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-16",
+        "morning_km": 0.0,
+        "afternoon_km": 5.25,
+        "total_km": 5.25
+      },
+      {
+        "date": "2026-11-17",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-18",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-19",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-20",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-21",
         "morning_km": 0.0,
         "afternoon_km": 0.0,
         "total_km": 0.0

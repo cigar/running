@@ -1,7 +1,7 @@
 {
-  "last_12_months_km": 846.23,
+  "last_12_months_km": 859.58,
   "last_12_months": {
-    "total_km": 846.23,
+    "total_km": 859.58,
     "months": [
       {
         "month": "2025-12",
@@ -49,75 +49,15 @@
       },
       {
         "month": "2026-11",
-        "km": 15.15
+        "km": 28.5
       }
     ]
   },
   "last_15_days": {
-    "total_km": 23.32,
+    "total_km": 19.46,
     "morning_km": 0.0,
-    "afternoon_km": 23.32,
+    "afternoon_km": 19.46,
     "days": [
-      {
-        "date": "2026-10-28",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-10-29",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-10-30",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-10-31",
-        "morning_km": 0.0,
-        "afternoon_km": 8.17,
-        "total_km": 8.17
-      },
-      {
-        "date": "2026-11-01",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-11-02",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-11-03",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-11-04",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
-      {
-        "date": "2026-11-05",
-        "morning_km": 0.0,
-        "afternoon_km": 9.04,
-        "total_km": 9.04
-      },
-      {
-        "date": "2026-11-06",
-        "morning_km": 0.0,
-        "afternoon_km": 0.0,
-        "total_km": 0.0
-      },
       {
         "date": "2026-11-07",
         "morning_km": 0.0,
@@ -144,6 +84,66 @@
       },
       {
         "date": "2026-11-11",
+        "morning_km": 0.0,
+        "afternoon_km": 8.1,
+        "total_km": 8.1
+      },
+      {
+        "date": "2026-11-12",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-13",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-14",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-15",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-16",
+        "morning_km": 0.0,
+        "afternoon_km": 5.25,
+        "total_km": 5.25
+      },
+      {
+        "date": "2026-11-17",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-18",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-19",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-20",
+        "morning_km": 0.0,
+        "afternoon_km": 0.0,
+        "total_km": 0.0
+      },
+      {
+        "date": "2026-11-21",
         "morning_km": 0.0,
         "afternoon_km": 0.0,
         "total_km": 0.0
@@ -50869,6 +50869,38 @@
       "average_heartrate": 143.0,
       "average_speed": 3.020999908447266,
       "elevation_gain": 10.0,
+      "streak": 1
+    },
+    {
+      "run_id": 1794373001000,
+      "name": "嘉定区 跑步",
+      "distance": 8099.3,
+      "moving_time": "0:42:53.230000",
+      "type": "Run",
+      "subtype": "",
+      "start_date": "2026-11-11 04:56:41",
+      "start_date_local": "2026-11-11 12:56:41",
+      "location_country": "安亭镇, 嘉定区, 上海市, 201804, 中国",
+      "summary_polyline": "ey~}DugtbVUj@@tEaCnQh@TrGc@xVM|Cn@hI~GlRjTnAjHh@r@JtGe@p@cDT_Ax@}CnJE`CdBnC|@~D`BrC^hBC~C\\n@nCr@dAzHx@fBwDvFApDj@nAhBj@b@tApBZ|D]PgAWmCf@aDa@_Ff@cArAi@`@oAi@oCJsL~@{DSoBv@oBqAiMpA_HeBcCe@{BiBoBg@AuE`DsBrEgBb@@wHuCqK_XqYcE{AfAiLsAeBA{BkAwC}EaHaIqIcAn@e@t@@dAcBdBu@C",
+      "average_heartrate": 160.0,
+      "average_speed": 3.1370000839233403,
+      "elevation_gain": 11.0,
+      "streak": 1
+    },
+    {
+      "run_id": 1794802016000,
+      "name": "嘉定区 跑步",
+      "distance": 5251.66,
+      "moving_time": "0:29:59.732000",
+      "type": "Run",
+      "subtype": "",
+      "start_date": "2026-11-16 04:06:56",
+      "start_date_local": "2026-11-16 12:06:56",
+      "location_country": "安亭镇, 嘉定区, 上海市, 201804, 中国",
+      "summary_polyline": "yx~}DmhtbVg@|GqApG_@xHb\\AbC]nBeQd@uRoAof@Ic@YDiKxF_DyG^k@M]gCmEcCbAuGwKoB`AcCoCo@IyC|EgDhDEf@vCpGfDlCtB|DxJ`Mx@vB`MxOsIiJ{Ax@",
+      "average_heartrate": 157.0,
+      "average_speed": 2.905999898910522,
+      "elevation_gain": 22.0,
       "streak": 1
     }
   ]
